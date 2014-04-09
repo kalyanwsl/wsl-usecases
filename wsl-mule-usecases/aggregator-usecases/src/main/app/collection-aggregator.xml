@@ -9,13 +9,15 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
         <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8084" doc:name="HTTP" path="collection-aggregator"/>
         <component class="com.whiteskylabs.aggregators.GenerateListObject" doc:name="Java"/>
         <collection-splitter doc:name="Collection Splitter"/>
-        <set-property propertyName="MULE_CORRELATION_ID" value="6ed49087-2765-45f6-a9bf-ade2aea363c9" doc:name="Property"/>
-        <set-property propertyName="MULE_CORRELATION_GROUP_SIZE" value="100" doc:name="Property" />
+       <!--  <set-property propertyName="MULE_CORRELATION_ID" value="6ed49087-2765-45f6-a9bf-ade2aea363c9" doc:name="Property"/> 
+        <set-property propertyName="MULE_CORRELATION_GROUP_SIZE" value="100" doc:name="Property" />-->
         <vm:outbound-endpoint path="collection-aggregator" exchange-pattern="one-way"  doc:name="VM"/>
     </flow>
     <flow name="collection-aggregatorFlow4" doc:name="collection-aggregatorFlow4">
         <vm:inbound-endpoint path="collection-aggregator" exchange-pattern="one-way"  doc:name="VM"/>
         <logger message="PAYLOAD before aggregator :#[payload]" level="INFO" doc:name="Logger"/>
+        <resequencer timeout="1000" failOnTimeout="false" doc:name="Resequencer"/>
+        <logger message="After resequencer : #[payload] ................... #[message.correlationSequence]" level="INFO" doc:name="Logger"/>
         <collection-aggregator failOnTimeout="false" doc:name="Collection Aggregator" timeout="5000"/>
         <logger level="INFO" doc:name="Logger" message="PAYLOAD:#[payload]"/>
     </flow>
