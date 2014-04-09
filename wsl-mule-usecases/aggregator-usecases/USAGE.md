@@ -1,6 +1,6 @@
 [Purpose](#purpose)  
 [Prerequisites](#prerequisites)  
-[Steps to use Mule Deployment plugin](#steps-to-use-mule-deployment-plugin)  
+[Running the application](#running-the-application)  
 [Resources](#resources)
 
 Purpose
