@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:sftp="http://www.mulesoft.org/schema/mule/sftp" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper"
+	xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns:quartz="http://www.mulesoft.org/schema/mule/quartz" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.5.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/quartz http://www.mulesoft.org/schema/mule/quartz/current/mule-quartz.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/sftp http://www.mulesoft.org/schema/mule/sftp/current/mule-sftp.xsd">
+
+	<file:connector name="NonStreamingFileConnector"
+		autoDelete="false" streaming="false" validateConnections="false"
+		doc:name="File" pollingFrequency="5000">
+		<!-- <receiver-threading-profile maxThreadsActive="1" threadTTL="60000" 
+			maxBufferSize="1"/> -->
+		<dispatcher-threading-profile
+			maxThreadsActive="1" threadTTL="60000" maxBufferSize="1" />
+		<service-overrides messageReceiver="org.mule.transport.file.MTUFileMessageReceiver"
+			messageFactory="org.mule.transport.file.MTUFileMessageFactory" />
+		<file:expression-filename-parser />
+	</file:connector>
+	<quartz:connector name="OneThreadQuartzConnector"
+		validateConnections="false" doc:name="Quartz">
+		<quartz:factory-property key="org.quartz.threadPool.threadCount"
+			value="1" />
+	</quartz:connector>
+
+	<flow name="ReadFiles" doc:name="ReadFiles">
+		<file:inbound-endpoint path="D:\kalyan\test\fileEndpoint\inputfiles"
+			responseTimeout="10000" connector-ref="NonStreamingFileConnector"
+			doc:name="File" pollingFrequency="5000" />
+		<collection-splitter doc:name="Collection Splitter" />
+		<vm:outbound-endpoint exchange-pattern="one-way"
+			path="fileDataQueue" doc:name="VM" />
+		<!-- <component class="com.mtudda.MTUTransformer" doc:name="Java" /> -->
+	</flow>
+	<flow name="ftp_quartzFlow1" doc:name="ftp_quartzFlow1">
+		<vm:inbound-endpoint exchange-pattern="one-way"
+			path="fileDataQueue" doc:name="VM" />
+		<!-- <component doc:name="Java" class="org.mule.transport.file.GZIPDecompress" />
+		<object-to-string-transformer doc:name="Object to String" /> -->
+		<logger message="COMPLETED: #[payload]" level="INFO" doc:name="Logger" />
+		<!-- <sftp:outbound-endpoint exchange-pattern="one-way"
+			host="localhost" port="2222" path="/ftpOutbound" user="TestUser"
+			password="admin" responseTimeout="10000" doc:name="SFTP" /> -->
+        <choice-exception-strategy doc:name="Choice Exception Strategy">
+            <catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(java.net.ConnectException)]">
+                <logger message="CONNECTION EXCEPTION : #[exception.getMessage()]" level="INFO" doc:name="Logger"/>
+            </catch-exception-strategy>
+            <catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.jcraft.jsch.JSchException)]">
+                <logger message="JSCH Exception" level="INFO" doc:name="Logger"/>
+            </catch-exception-strategy>
+            <catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(java.io.IOException)]">
+                <logger message="IO EXCEPTION : #[exception.getMessage()]" level="INFO" doc:name="Logger"/>
+                <file:outbound-endpoint path="D:\kalyan\test\fileEndpoint\outputfiles" responseTimeout="10000" doc:name="File"/>
+            </catch-exception-strategy>
+        </choice-exception-strategy>
+	</flow>
+</mule>
