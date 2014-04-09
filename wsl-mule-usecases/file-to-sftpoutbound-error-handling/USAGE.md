@@ -6,7 +6,7 @@
 Purpose
 =======
 
-This usecase is implemented to handle sftp outbound endpoint connection exception and place the current file in 'error-out' folder
+This usecase is implemented to handle sftp outbound endpoint connection exception. Place the current file in 'error-out' folder when SFTP instance is not available.
 
 
 Prerequisites
