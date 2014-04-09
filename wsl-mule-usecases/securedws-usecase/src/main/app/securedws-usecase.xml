@@ -1,0 +1,72 @@
+
+<mule xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+ 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 
+    xmlns:spring="http://www.springframework.org/schema/beans"
+ 
+    xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
+ 
+    xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+ 
+    xmlns:http="http://www.mulesoft.org/schema/mule/http"
+    
+    xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
+    
+     xmlns:ss="http://www.springframework.org/schema/security" 
+ 
+    xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/3.1/mule-spring-security.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd" version="EE-3.4.1">
+ 
+
+ 
+<!-- <spring:beans>
+ <spring:bean id = "userbean" class="com.wsl.ws.ValidateUser"/>
+ <spring:bean id = "timestampbean" class="com.wsl.ws.TimeStampValidator"/>
+<ss:authentication-manager alias="authenticationManager">
+   <ss:authentication-provider>
+     <ss:user-service id="userService">
+         <ss:user name="john" password="password" authorities="ROLE_ADMIN" />
+         <ss:user name="david" password="password" authorities="ROLE_ADMIN" />
+         <ss:user name="victor" password="password" authorities="ROLE_ADMIN" />
+      </ss:user-service>
+     </ss:authentication-provider>
+ </ss:authentication-manager>
+</spring:beans> -->
+
+<!-- <mule-ss:security-manager>
+    <mule-ss:delegate-security-provider name="memory-dao" delegate-ref="authenticationManager" />
+</mule-ss:security-manager>
+
+<cxf:ws-security name="inboundSecurityConfig"> 
+    <cxf:mule-security-manager />
+        <cxf:ws-config>
+              <cxf:property key="action" value="UsernameToken" />
+              <cxf:property key="passwordCallbackClass" value="com.wsl.ws.PasswordCallback"/>
+         </cxf:ws-config>
+         <cxf:ws-custom-validator>
+                    <cxf:timestamp-token-validator ref="timestampbean"/>
+                </cxf:ws-custom-validator>
+</cxf:ws-security>  -->
+ 
+    <flow name="UsernameTokenServiceFlow" doc:name="UsernameTokenServiceFlow"> 
+        <http:inbound-endpoint address="http://localhost:8081/security" exchange-pattern="request-response" doc:name="HTTP Inbound Endpoint"/>
+        <logger message="&quot;Payload received&quot; + #[payload]" level="INFO" doc:name="Logger"/> 
+        <cxf:jaxws-service serviceClass="com.wsl.ws.Greeter" doc:name="Secure UsernameToken service" validationEnabled="true">
+            <cxf:ws-security>
+                <cxf:ws-config>
+                    <cxf:property key="action" value="UsernameToken"/>
+                    <cxf:property key="passwordCallbackClass" value="com.wsl.ws.PasswordCallback"/>
+                </cxf:ws-config>
+            </cxf:ws-security>            
+        </cxf:jaxws-service>
+        <logger message="&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;Before greeter service" level="INFO" doc:name="Logger"/> 
+        <component class="com.wsl.ws.GreeterService" doc:name="Greeter Service"/> 
+    </flow>
+ 
+</mule> 
