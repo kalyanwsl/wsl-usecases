@@ -28,7 +28,7 @@ Running the application
 Resources
 ===========
 
-? [Using Interceptors] (http://www.mulesoft.org/documentation/display/current/Routing+Message+Processors#RoutingMessageProcessors-FirstSuccessful)
+? [first-successful implementation] (http://www.mulesoft.org/documentation/display/current/Routing+Message+Processors#RoutingMessageProcessors-FirstSuccessful)
 
 
 	
