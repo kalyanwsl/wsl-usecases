@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:sftp="http://www.mulesoft.org/schema/mule/sftp" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper"
+<mule xmlns:sftp="http://www.mulesoft.org/schema/mule/sftp"
+	xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper"
 	xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
 	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
 	xmlns:quartz="http://www.mulesoft.org/schema/mule/quartz" xmlns:file="http://www.mulesoft.org/schema/mule/file"
@@ -46,23 +47,26 @@ http://www.mulesoft.org/schema/mule/sftp http://www.mulesoft.org/schema/mule/sft
 	<flow name="ftp_quartzFlow1" doc:name="ftp_quartzFlow1">
 		<vm:inbound-endpoint exchange-pattern="one-way"
 			path="fileDataQueue" doc:name="VM" />
-		<!-- <component doc:name="Java" class="org.mule.transport.file.GZIPDecompress" />
-		<object-to-string-transformer doc:name="Object to String" /> -->
-		<logger message="COMPLETED: #[payload]" level="INFO" doc:name="Logger" />
-		<!-- <sftp:outbound-endpoint exchange-pattern="one-way"
+		<logger message="PAYLOAD from splitter : #[payload]" level="INFO"
+			doc:name="Logger" />
+		<set-property propertyName="originalFileName" value="#[payload['fileName']]"
+			doc:name="Property" />
+		<component doc:name="Java" class="org.mule.transport.file.GZIPDecompress" />
+
+		<object-to-string-transformer doc:name="Object to String" />
+
+		<sftp:outbound-endpoint exchange-pattern="one-way"
 			host="localhost" port="2222" path="/ftpOutbound" user="TestUser"
-			password="admin" responseTimeout="10000" doc:name="SFTP" /> -->
-        <choice-exception-strategy doc:name="Choice Exception Strategy">
-            <catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(java.net.ConnectException)]">
-                <logger message="CONNECTION EXCEPTION : #[exception.getMessage()]" level="INFO" doc:name="Logger"/>
-            </catch-exception-strategy>
-            <catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(com.jcraft.jsch.JSchException)]">
-                <logger message="JSCH Exception" level="INFO" doc:name="Logger"/>
-            </catch-exception-strategy>
-            <catch-exception-strategy doc:name="Catch Exception Strategy" when="#[exception.causedBy(java.io.IOException)]">
-                <logger message="IO EXCEPTION : #[exception.getMessage()]" level="INFO" doc:name="Logger"/>
-                <file:outbound-endpoint path="D:\kalyan\test\fileEndpoint\outputfiles" responseTimeout="10000" doc:name="File"/>
-            </catch-exception-strategy>
-        </choice-exception-strategy>
+			password="admin" responseTimeout="10000" doc:name="SFTP" outputPattern="#[message.outboundProperties['originalFileName']]"/>
+		<choice-exception-strategy doc:name="Choice Exception Strategy">
+			<catch-exception-strategy doc:name="Catch Exception Strategy"
+				when="#[exception.causedBy(java.io.IOException)]">
+				<logger message="IOEXCEPTION : #[exception.getSummaryMessage()]"
+					level="INFO" doc:name="Logger" />
+				<file:outbound-endpoint path="D:\kalyan\test\fileEndpoint\outputfiles"
+					responseTimeout="10000" doc:name="File"
+					outputPattern="#[message.outboundProperties['originalFileName']]" />
+			</catch-exception-strategy>
+		</choice-exception-strategy>
 	</flow>
 </mule>

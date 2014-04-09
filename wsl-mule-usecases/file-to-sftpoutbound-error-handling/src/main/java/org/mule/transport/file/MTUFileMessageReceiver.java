@@ -278,8 +278,10 @@ public class MTUFileMessageReceiver extends AbstractPollingMessageReceiver
     		System.out.println("Compressing the file content");
     		
     		fileData = new HashMap<String, Object>();
-    		fileData.put("fileName",f.getName());
+    		
+    		fileData.put("fileName", f.getName());
     		fileData.put("fileData", compress(content));
+    		
     		list.add(fileData);
     		
     	}
