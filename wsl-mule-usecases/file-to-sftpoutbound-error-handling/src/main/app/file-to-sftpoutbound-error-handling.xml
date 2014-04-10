@@ -65,7 +65,7 @@ http://www.mulesoft.org/schema/mule/sftp http://www.mulesoft.org/schema/mule/sft
 					level="INFO" doc:name="Logger" />
 				<file:outbound-endpoint path="D:\kalyan\test\fileEndpoint\outputfiles"
 					responseTimeout="10000" doc:name="File"
-					outputPattern="#[message.outboundProperties['originalFileName']]" />
+					outputPattern="#[message.outboundProperties['originalFileName']]" connector-ref="NonStreamingFileConnector"/>
 			</catch-exception-strategy>
 		</choice-exception-strategy>
 	</flow>
