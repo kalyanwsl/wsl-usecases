@@ -16,9 +16,9 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
     </flow>
     <flow name="collection-aggregator2" doc:name="collection-aggregator2">
         <vm:inbound-endpoint path="collection-aggregator" exchange-pattern="one-way"  doc:name="VM"/>
-        <logger message="PAYLOAD before aggregator :#[payload]" level="INFO" doc:name="Logger payload"/>
+        <logger message="PAYLOAD before aggregator :#[payload]" level="INFO" doc:name="Log payload"/>
 
         <collection-aggregator failOnTimeout="false" doc:name="Collection Aggregator" timeout="5000"/>
-        <logger level="INFO" doc:name="Logger payload" message="PAYLOAD:#[payload]"/>
+        <logger level="INFO" doc:name="Log payload" message="PAYLOAD:#[payload]"/>
     </flow>
 </mule>
