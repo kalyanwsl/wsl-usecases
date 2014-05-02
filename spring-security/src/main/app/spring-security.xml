@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:spring="http://www.springframework.org/schema/beans"
+       xmlns:http="http://www.mulesoft.org/schema/mule/http"
+       xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+       xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
+       xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf"
+       xmlns:ss="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/current/mule-spring-security.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-current.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd" version="EE-3.4.1">
+
+
+  <spring:beans>
+    <ss:authentication-manager alias="authenticationManager">
+    <ss:authentication-provider>
+        <ss:user-service id="userService">
+            <ss:user name="user1" password="password1" authorities="ROLE_ADMIN" />
+            <ss:user name="user2" password="password2" authorities="ROLE_ADMIN" />
+            <ss:user name="user3" password="password3" authorities="ROLE_ADMIN" />
+         </ss:user-service>
+     </ss:authentication-provider>
+     </ss:authentication-manager>
+   </spring:beans>
+   
+  <mule-ss:security-manager> 
+     <mule-ss:delegate-security-provider name="memory-dao" delegate-ref="authenticationManager" />
+  </mule-ss:security-manager>
+ 
+  <cxf:ws-security name="inboundSecurityConfig">
+      <!--  Dont remove this is required -->
+      <cxf:mule-security-manager/>
+      <cxf:ws-config>
+           <cxf:property key="action" value="UsernameToken" />
+      </cxf:ws-config>
+  </cxf:ws-security>
+  
+    <flow name="spring-webservice-security" doc:name="spring-webservice-security">
+          <http:inbound-endpoint address="http://localhost:8081/springsecurity" exchange-pattern="request-response" doc:name="HTTP">
+          <cxf:jaxws-service serviceClass="com.mulesoft.ws.security.Greeter">
+                <cxf:ws-security ref="inboundSecurityConfig"/>
+                </cxf:jaxws-service>
+          </http:inbound-endpoint>
+          <component class="com.mulesoft.ws.security.GreeterService" doc:name="Java"/>
+     </flow>        
+</mule>
