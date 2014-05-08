@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:json="http://www.mulesoft.org/schema/mule/json"
+	xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:sftp="http://www.mulesoft.org/schema/mule/sftp" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns:jdbc-ee="http://www.mulesoft.org/schema/mule/ee/jdbc" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/jdbc http://www.mulesoft.org/schema/mule/ee/jdbc/current/mule-jdbc-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/sftp http://www.mulesoft.org/schema/mule/sftp/current/mule-sftp.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd">
+
+	
+	<sfdc:config name="Salesforce" username="officetestemail@gmail.com"
+  password="D3v3lop3r" securityToken="mywNnJLuRVedmPRUpiSCh7MI"
+  doc:name="Salesforce">
+  <sfdc:connection-pooling-profile
+   initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW" />
+ </sfdc:config>
+	
+	
+	
+	<!--Global element Oracle_Data_Source -->
+	<jdbc-ee:oracle-data-source name="Oracle_Data_Source"
+		user="system" password="oracle" url="jdbc:oracle:thin:@//localhost:1521/XE"
+		transactionIsolation="UNSPECIFIED" doc:name="Oracle Data Source" />
+
+	<!--Global element Oracle_DatabaseConnector -->
+	<jdbc-ee:connector name="DatabaseConnector"
+		dataSource-ref="Oracle_Data_Source" validateConnections="true"
+		pollingFrequency="0" doc:name="Database" queryTimeout="3">
+		<reconnect-forever frequency="15000" blocking="false" />
+	</jdbc-ee:connector>
+
+	<spring:beans>
+		<spring:bean name="CustomMessageProcessorMessageNotification"
+			class="com.whiteskylabs.loggingUtil.CustomMessageProcessorMessageNotification">
+		</spring:bean>		
+	</spring:beans>	
+
+	<notifications>
+		<notification-listener ref="CustomMessageProcessorMessageNotification"/>
+	</notifications>
+
+	
+
+	<flow name="TestNotificationFlow" doc:name="TestNotificationFlow"
+		processingStrategy="synchronous" tracking:enable-default-events="true">
+		<http:inbound-endpoint exchange-pattern="request-response"
+			host="localhost" port="8081" path="testErrorHandling" doc:name="HTTP"
+			mimeType="application/json" />
+		<!-- <logger message="Delay= #[message.inboundProperties['delay']]"
+			level="INFO" doc:name="Logger" /> -->
+		<expression-filter expression="#[payload !='/favicon.ico']"
+			doc:name="Expression" nullReturnsTrue="true"/>
+	
+		<jdbc-ee:outbound-endpoint exchange-pattern="request-response"
+			queryKey="selectQ" queryTimeout="2" connector-ref="DatabaseConnector"
+			doc:name="Database">
+			<jdbc-ee:query key="selectQ" value="select * from testtable" />
+			<jdbc-ee:query key="callSP"
+				value="call dummyproc(#['rafiq';string;in],#[mules;string;out])" />
+			<jdbc-ee:query key="callspSLEEP"
+				value="call SLEEP(#[message.inboundProperties['delay'];string;in],#[mules;string;out])" />
+			<jdbc-ee:query key="wrongQ" value="select * from wrongTable" />
+			<jdbc-ee:query key="callSumIT" value="call sumint" />
+		</jdbc-ee:outbound-endpoint>
+		<json:object-to-json-transformer
+			doc:name="Object to JSON" />
+		<!-- <logger message=":::::::::::::::::::Next to DB Oneway::::::::::::::"
+			level="INFO" doc:name="Logger" /> -->
+        <file:outbound-endpoint path="h:\vikramwork\file\errorfiles" responseTimeout="10000" doc:name="File"/>
+        <sfdc:get-user-info config-ref="Salesforce"  doc:name="Salesforce"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <!-- <vm:outbound-endpoint exchange-pattern="one-way" path="vmQ" doc:name="VM"/> -->
+		<!--<logger message="Response from DB:#[payload]:" level="INFO" doc:name="Logs 
+			Response from DB" /> <vm:outbound-endpoint exchange-pattern="one-way" path="testVMQ" 
+			doc:name="VM"/> <expression-filter expression="#[payload.getClass().toString() 
+			!= 'class java.util.HashMap']" doc:name="Expression" doc:description="This 
+			expression filter will allow payload's class of type only HashMap if not 
+			flow will stops." /> <collection-splitter doc:name="Collection Splitter" 
+			/> <object-to-string-transformer doc:name="Object to String" /> <logger message="Payload::::#[payload]:::" 
+			level="INFO" doc:name="Logger" /> -->
+		<!-- <sftp:outbound-endpoint exchange-pattern="request-response" outputPattern="#[function:dateStamp:yyyymmddHHMMss]" 
+			host="localhost" port="2222" path="/out" user="crushuser2" password="password" 
+			responseTimeout="10000" connector-ref="SFTPConnectorOB" duplicateHandling="addSeqNo" 
+			doc:name="moving files to-crushuser2/out" /> -->
+		<!-- <choice-exception-strategy doc:name="Choice Exception Strategy">
+			<catch-exception-strategy
+				when="#[exception.causedBy(java.sql.SQLException)]" doc:name="Catch Exception Strategy">
+				<logger
+					message="#[flow.name]:::: in SQLException block :::#[exception.getCause().getMessage()]:::"
+					level="INFO" doc:name="Logs Exception cause(message)" />
+
+				<choice doc:name="Choice">
+					<when
+						expression="#[exception.getCause().getMessage().toString().contains('Cannot get connection')]">
+						<flow-ref name="DBErrorHandlingUnableToConnectFlow"
+							doc:name="moving to UnableToConnectFlow" />
+					</when>
+					<when
+						expression="#[exception.getCause().getMessage().toString().contains('ORA-01013')]">
+						<flow-ref name="DBErrorHandlingResponseTimeOutFlow"
+							doc:name="moving to ResponseTimeOutFlow" />
+					</when>
+					<otherwise>
+						<logger
+							message="in Exceptional block default choice :::#[exception.getCause().getMessage()]:::"
+							level="INFO" doc:name="Logs exception cause message" />
+					</otherwise>
+				</choice>
+			</catch-exception-strategy>
+			<catch-exception-strategy
+				when="#[exception.causedBy(java.io.IOException)]" doc:name="Catch Exception Strategy">
+				<logger
+					message="in IOException block  ::::::::::::::::::#[exception.getCause().getMessage()]::::::::::::::::::::::::::"
+					level="INFO" doc:name="Logs Exception cause" />
+				<flow-ref name="DBErrorHandlingFlow1" doc:name="moving file to err folder" />
+			</catch-exception-strategy>
+			<catch-exception-strategy doc:name="Catch Exception Strategy">
+				<logger
+					message="in Default Exception block::::::::::::::::::#[exception.getCause().getMessage()]::::::::::::::::::::::::::"
+					level="INFO" doc:name="Logs Exception cause" />
+			</catch-exception-strategy>
+		</choice-exception-strategy> -->
+	</flow>
+ <!--    <flow name="TestNotificationFlow1" doc:name="TestNotificationFlow1">
+        <vm:inbound-endpoint exchange-pattern="one-way" path="vmQ" doc:name="VM"/>
+
+        <file:outbound-endpoint path="f:\vikramwork\file\errorfiles" responseTimeout="10000" doc:name="File"/>
+        <logger message="This is log from flow: #[flow.name]" level="INFO" doc:name="Logger"/>
+    </flow> -->
+</mule>
+
