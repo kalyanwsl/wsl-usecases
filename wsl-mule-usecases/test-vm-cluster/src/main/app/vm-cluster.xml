@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
+
+	<spring:beans>
+		<context:property-placeholder location="test-cluster-app.properties" />
+	</spring:beans>
+	
+	<jms:activemq-connector name="active-mq" brokerURL="${jms.borker.url}" validateConnections="true"
+		doc:name="active-mq" />
+	
+	<flow name="publish-to-vm" doc:name="publish-to-vm">
+		<jms:inbound-endpoint queue="listner.jmsq"
+			connector-ref="active-mq" doc:name="jmsq-listner" />
+		<logger message="published message to 'listner.vmq' whose payload is :::#[payload]:::"
+			level="INFO" doc:name="log-info" />
+		<vm:outbound-endpoint exchange-pattern="one-way"
+			path="listner.vmq" doc:name="vmq-dispatcher">
+		</vm:outbound-endpoint>	
+	</flow>
+	<flow name="vmc-flow" doc:name="vmc-flow">
+		<vm:inbound-endpoint exchange-pattern="one-way"
+			path="listner.vmq" doc:name="vmq-listner" />
+		<logger
+			message="Request hit to server: #[server.host] at time: #[server.dateTime] from the flow: #[flow.name] with payload: #[payload] and message id : #[message.id.toString()]"
+			level="INFO" doc:name="log-info" />
+	</flow>
+	
+</mule>
