@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:json="http://www.mulesoft.org/schema/mule/json"
+	xmlns:oauth2-provider="http://www.mulesoft.org/schema/mule/oauth2-provider"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jersey="http://www.mulesoft.org/schema/mule/jersey" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:mule-ss="http://www.mulesoft.org/schema/mule/spring-security"
+	xmlns:ss="http://www.springframework.org/schema/security" xmlns:spring="http://www.springframework.org/schema/beans"
+	version="EE-3.4.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/jersey http://www.mulesoft.org/schema/mule/jersey/current/mule-jersey.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/oauth2-provider http://www.mulesoft.org/schema/mule/oauth2-provider/1.2/mule-oauth2-provider.xsd
+http://www.mulesoft.org/schema/mule/spring-security http://www.mulesoft.org/schema/mule/spring-security/current/mule-spring-security.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+	<context:property-placeholder location="test.properties" />
+
+	<spring:beans>
+		<ss:authentication-manager id="resourceOwnerAuthenticationManager">
+			<ss:authentication-provider>
+				<ss:user-service id="resourceOwnerUserService">
+					<ss:user name="kalyan" password="kalyan" authorities="RESOURCE_OWNER" />
+				</ss:user-service>
+			</ss:authentication-provider>
+		</ss:authentication-manager>
+	</spring:beans>
+
+	<mule-ss:security-manager>
+		<mule-ss:delegate-security-provider
+			name="resourceOwnerSecurityProvider" delegate-ref="resourceOwnerAuthenticationManager" />
+	</mule-ss:security-manager>
+
+	<oauth2-provider:config name="oauth2Provider"
+		accessTokenEndpointPath="whiteskylabs/oauth/token" providerName="Whitesky labs"
+		port="${http.port}" authorizationEndpointPath="whiteskylabs/oauth/authorize"
+		resourceOwnerSecurityProvider-ref="resourceOwnerSecurityProvider"
+		
+		scopes="READ_RESOURCE POST_RESOURCE" doc:name="OAuth provider module">
+		
+		<oauth2-provider:clients>
+			<oauth2-provider:client clientId="myclientid"
+				secret="myclientsecret" type="CONFIDENTIAL" clientName="Kalyan">
+				<oauth2-provider:redirect-uris>
+					<oauth2-provider:redirect-uri>http://localhost*</oauth2-provider:redirect-uri>
+				</oauth2-provider:redirect-uris>
+				<oauth2-provider:authorized-grant-types>
+					<oauth2-provider:authorized-grant-type>AUTHORIZATION_CODE</oauth2-provider:authorized-grant-type>
+				</oauth2-provider:authorized-grant-types>
+				<oauth2-provider:scopes>
+					<oauth2-provider:scope>READ_RESOURCE</oauth2-provider:scope>
+					<oauth2-provider:scope>POST_RESOURCE</oauth2-provider:scope>
+				</oauth2-provider:scopes>
+			</oauth2-provider:client>
+		</oauth2-provider:clients>
+
+	</oauth2-provider:config>
+
+	<flow name="oauth-provider" doc:name="oauth-provider">
+		<http:inbound-endpoint exchange-pattern="request-response"
+			host="localhost" port="8081" doc:name="http-request" path="sayHello" />
+		<oauth2-provider:validate config-ref="oauth2Provider"
+			doc:name="oauth-provider-module" scopes="READ_RESOURCE">
+		</oauth2-provider:validate>
+		<jersey:resources doc:name="return-wishes">
+			<component class="com.whiteskylabs.restservice.HelloRESTService" />
+		</jersey:resources>
+		<!-- <http:outbound-endpoint exchange-pattern="request-response" host="localhost" 
+			port="${port}" path="${path}" method="POST" doc:name="HTTP"/> -->
+	</flow>
+	<flow name="redirect-flow" doc:name="redirect-flow">
+		<http:inbound-endpoint exchange-pattern="request-response"
+			address="http://localhost:8081/redirect" doc:name="HTTP" />
+		<set-property value="302" propertyName="http.status"
+			doc:name="set-http-302" />
+		<set-property propertyName="Location"
+			value="http://localhost:8081/whiteskylabs/oauth/token?grant_type=authorization_code&amp;&amp;client_id=myclientid&amp;client_secret=myclientsecret&amp;code=#[message.inboundProperties.code]
+     &amp;redirect_uri=http://localhost:8081/redirect"
+			doc:name="set-http-redirection-token-url" />
+	</flow>
+</mule>
