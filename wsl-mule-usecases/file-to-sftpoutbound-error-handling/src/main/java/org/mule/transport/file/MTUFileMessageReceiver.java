@@ -266,7 +266,6 @@ public class MTUFileMessageReceiver extends AbstractPollingMessageReceiver
     private List<Map<String, Object>> extractContent(List<File> files) throws Exception {
     	List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
     	Map<String, Object> fileData = new HashMap<String, Object>();
-    	ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
     	int size = files.size();
     	
     	for(int i = 0; i < size; i++) {
@@ -283,7 +282,7 @@ public class MTUFileMessageReceiver extends AbstractPollingMessageReceiver
     		fileData.put("fileData", compress(content));
     		
     		list.add(fileData);
-    		
+    		fis.close();
     	}
     	return list;
     	
