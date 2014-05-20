@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph author="rafiqoffice" created="Mon May 19 11:42:11 IST 2014" description="JSON To Map" guiVersion="3.4.3.P" id="1400482851805" licenseCode="Unlicensed" licenseType="Unknown" modified="Mon May 19 11:42:11 IST 2014" modifiedBy="rafiqoffice" name="JSON_To_Map" preview-file="${Project_Home}/src/test/resources/complexJSONSample.json" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object/medications/aceInhibitors" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="229a61a5-8e6a-4b49-93b7-0dba67c4655e" _parent_id="__parent_id" _type="Input" id="30276d40-406f-4fc6-9d1f-a14065f7206c">
+<Record fieldDelimiter="," name="aceInhibitors" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/object/medications/aceInhibitors/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="1" __sourcePath="{}/object/medications/aceInhibitors/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+<Field __index="2" __sourcePath="{}/object/medications/aceInhibitors/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="3" __sourcePath="{}/object/medications/aceInhibitors/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="4" __sourcePath="{}/object/medications/aceInhibitors/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="5" __sourcePath="{}/object/medications/aceInhibitors/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="6" __sourcePath="{}/object/medications/aceInhibitors/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object/medications/aceInhibitors" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="e8d0774c-a9bd-42fc-9e06-75be0475dfe4" _parent_id="__parent_id" _type="Output" id="c2aa9cbb-69f5-46ff-9c59-6b840eea2d6a">
+<Record fieldDelimiter="," name="aceInhibitors" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="2" __sourcePath="{}/object/medications/aceInhibitors/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="0" __sourcePath="{}/object/medications/aceInhibitors/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="5" __sourcePath="{}/object/medications/aceInhibitors/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="6" __sourcePath="{}/object/medications/aceInhibitors/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+<Field __index="3" __sourcePath="{}/object/medications/aceInhibitors/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="4" __sourcePath="{}/object/medications/aceInhibitors/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="1" __sourcePath="{}/object/medications/aceInhibitors/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="7" __referenceCounter="1" __sourcePath="{}/object/medications/antianginal" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="229a61a5-8e6a-4b49-93b7-0dba67c4655e" _parent_id="__parent_id" _type="Input" id="4e893fb8-295f-4eb6-972e-9de10090877a">
+<Record fieldDelimiter="," name="antianginal" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __index="7" __sourcePath="{}/object/medications/antianginal/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="8" __sourcePath="{}/object/medications/antianginal/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+<Field __index="9" __sourcePath="{}/object/medications/antianginal/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="10" __sourcePath="{}/object/medications/antianginal/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="11" __sourcePath="{}/object/medications/antianginal/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="12" __sourcePath="{}/object/medications/antianginal/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="13" __sourcePath="{}/object/medications/antianginal/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="7" __referenceCounter="1" __sourcePath="{}/object/medications/antianginal" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="e8d0774c-a9bd-42fc-9e06-75be0475dfe4" _parent_id="__parent_id" _type="Output" id="97ac786e-8ef2-40d8-bf9b-4ea668aec2aa">
+<Record fieldDelimiter="," name="antianginal" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="9" __sourcePath="{}/object/medications/antianginal/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="7" __sourcePath="{}/object/medications/antianginal/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="12" __sourcePath="{}/object/medications/antianginal/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="13" __sourcePath="{}/object/medications/antianginal/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+<Field __index="10" __sourcePath="{}/object/medications/antianginal/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="11" __sourcePath="{}/object/medications/antianginal/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="8" __sourcePath="{}/object/medications/antianginal/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="14" __referenceCounter="1" __sourcePath="{}/object/medications/anticoagulants" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="229a61a5-8e6a-4b49-93b7-0dba67c4655e" _parent_id="__parent_id" _type="Input" id="10bcae3b-8672-49c7-9d56-bd0aa3b46268">
+<Record fieldDelimiter="," name="anticoagulants" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __index="14" __sourcePath="{}/object/medications/anticoagulants/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="15" __sourcePath="{}/object/medications/anticoagulants/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+<Field __index="16" __sourcePath="{}/object/medications/anticoagulants/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="17" __sourcePath="{}/object/medications/anticoagulants/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="18" __sourcePath="{}/object/medications/anticoagulants/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="19" __sourcePath="{}/object/medications/anticoagulants/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="20" __sourcePath="{}/object/medications/anticoagulants/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="14" __referenceCounter="1" __sourcePath="{}/object/medications/anticoagulants" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="e8d0774c-a9bd-42fc-9e06-75be0475dfe4" _parent_id="__parent_id" _type="Output" id="0c8fc7ab-3502-4b37-8efd-8552211e1f02">
+<Record fieldDelimiter="," name="anticoagulants" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="16" __sourcePath="{}/object/medications/anticoagulants/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="14" __sourcePath="{}/object/medications/anticoagulants/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="19" __sourcePath="{}/object/medications/anticoagulants/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="20" __sourcePath="{}/object/medications/anticoagulants/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+<Field __index="17" __sourcePath="{}/object/medications/anticoagulants/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="18" __sourcePath="{}/object/medications/anticoagulants/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="15" __sourcePath="{}/object/medications/anticoagulants/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="21" __referenceCounter="1" __sourcePath="{}/object/medications/betaBlocker" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="229a61a5-8e6a-4b49-93b7-0dba67c4655e" _parent_id="__parent_id" _type="Input" id="7ed39ddc-08cc-467e-a270-21d4df0860cd">
+<Record fieldDelimiter="," name="betaBlocker" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __index="21" __sourcePath="{}/object/medications/betaBlocker/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="22" __sourcePath="{}/object/medications/betaBlocker/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+<Field __index="23" __sourcePath="{}/object/medications/betaBlocker/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="24" __sourcePath="{}/object/medications/betaBlocker/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="25" __sourcePath="{}/object/medications/betaBlocker/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="26" __sourcePath="{}/object/medications/betaBlocker/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="27" __sourcePath="{}/object/medications/betaBlocker/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="21" __referenceCounter="1" __sourcePath="{}/object/medications/betaBlocker" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="e8d0774c-a9bd-42fc-9e06-75be0475dfe4" _parent_id="__parent_id" _type="Output" id="89dcf578-2f33-4cc3-868c-19f63987e4a0">
+<Record fieldDelimiter="," name="betaBlocker" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="23" __sourcePath="{}/object/medications/betaBlocker/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="21" __sourcePath="{}/object/medications/betaBlocker/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="26" __sourcePath="{}/object/medications/betaBlocker/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="27" __sourcePath="{}/object/medications/betaBlocker/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+<Field __index="24" __sourcePath="{}/object/medications/betaBlocker/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="25" __sourcePath="{}/object/medications/betaBlocker/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="22" __sourcePath="{}/object/medications/betaBlocker/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="28" __referenceCounter="1" __sourcePath="{}/object/medications/diuretic" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="229a61a5-8e6a-4b49-93b7-0dba67c4655e" _parent_id="__parent_id" _type="Input" id="e5ccad05-e820-4510-ae4e-7b03689e48d2">
+<Record fieldDelimiter="," name="diuretic" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __index="28" __sourcePath="{}/object/medications/diuretic/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="29" __sourcePath="{}/object/medications/diuretic/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+<Field __index="30" __sourcePath="{}/object/medications/diuretic/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="31" __sourcePath="{}/object/medications/diuretic/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="32" __sourcePath="{}/object/medications/diuretic/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="33" __sourcePath="{}/object/medications/diuretic/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="34" __sourcePath="{}/object/medications/diuretic/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="28" __referenceCounter="1" __sourcePath="{}/object/medications/diuretic" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="e8d0774c-a9bd-42fc-9e06-75be0475dfe4" _parent_id="__parent_id" _type="Output" id="29a92bc0-eb57-4221-8a2f-e2805c3ca554">
+<Record fieldDelimiter="," name="diuretic" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="30" __sourcePath="{}/object/medications/diuretic/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="28" __sourcePath="{}/object/medications/diuretic/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="33" __sourcePath="{}/object/medications/diuretic/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="34" __sourcePath="{}/object/medications/diuretic/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+<Field __index="31" __sourcePath="{}/object/medications/diuretic/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="32" __sourcePath="{}/object/medications/diuretic/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="29" __sourcePath="{}/object/medications/diuretic/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="45" __referenceCounter="1" __sourcePath="{}/object/imaging" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="7ad6f805-cced-40de-a4fc-172b2a66f347" _parent_id="__parent_id" _type="Input" id="9f3080c5-4f53-4e6a-8f9f-70db59817e3b">
+<Record fieldDelimiter="," name="imaging" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __index="45" __sourcePath="{}/object/imaging/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="46" __sourcePath="{}/object/imaging/time" containerType="SINGLE" label="time" name="time" type="string"/>
+<Field __index="47" __sourcePath="{}/object/imaging/location" containerType="SINGLE" label="location" name="location" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="45" __referenceCounter="1" __sourcePath="{}/object/imaging" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="a3bbd6fe-4875-42f5-a603-44f88888d6db" _parent_id="__parent_id" _type="Output" id="13f38530-d9d1-42d8-96ad-e6dc17909fbd">
+<Record fieldDelimiter="," name="imaging" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="47" __sourcePath="{}/object/imaging/location" containerType="SINGLE" label="location" name="location" type="string"/>
+<Field __index="45" __sourcePath="{}/object/imaging/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="46" __sourcePath="{}/object/imaging/time" containerType="SINGLE" label="time" name="time" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="42" __referenceCounter="1" __sourcePath="{}/object/labs" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="7ad6f805-cced-40de-a4fc-172b2a66f347" _parent_id="__parent_id" _type="Input" id="711c082a-e1bf-4858-8fc9-004be059af56">
+<Record fieldDelimiter="," name="labs" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __index="42" __sourcePath="{}/object/labs/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="43" __sourcePath="{}/object/labs/time" containerType="SINGLE" label="time" name="time" type="string"/>
+<Field __index="44" __sourcePath="{}/object/labs/location" containerType="SINGLE" label="location" name="location" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="42" __referenceCounter="1" __sourcePath="{}/object/labs" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="a3bbd6fe-4875-42f5-a603-44f88888d6db" _parent_id="__parent_id" _type="Output" id="dbde7682-e49c-4390-acd7-16e2d12052e1">
+<Record fieldDelimiter="," name="labs" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="44" __sourcePath="{}/object/labs/location" containerType="SINGLE" label="location" name="location" type="string"/>
+<Field __index="42" __sourcePath="{}/object/labs/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="43" __sourcePath="{}/object/labs/time" containerType="SINGLE" label="time" name="time" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object/medications" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="7ad6f805-cced-40de-a4fc-172b2a66f347" _parent_id="__parent_id" _type="Input" id="229a61a5-8e6a-4b49-93b7-0dba67c4655e">
+<Record fieldDelimiter="," name="medications" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object/medications" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="a3bbd6fe-4875-42f5-a603-44f88888d6db" _parent_id="__parent_id" _type="Output" id="e8d0774c-a9bd-42fc-9e06-75be0475dfe4">
+<Record fieldDelimiter="," name="medications" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="35" __referenceCounter="1" __sourcePath="{}/object/medications/mineral" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="229a61a5-8e6a-4b49-93b7-0dba67c4655e" _parent_id="__parent_id" _type="Input" id="70916082-f9cf-4778-b923-5f9040f94d02">
+<Record fieldDelimiter="," name="mineral" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_parent_id" __systemManaged="true" label="__parent_id" name="__parent_id" type="string"/>
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+<Field __index="35" __sourcePath="{}/object/medications/mineral/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="36" __sourcePath="{}/object/medications/mineral/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+<Field __index="37" __sourcePath="{}/object/medications/mineral/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="38" __sourcePath="{}/object/medications/mineral/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="39" __sourcePath="{}/object/medications/mineral/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="40" __sourcePath="{}/object/medications/mineral/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="41" __sourcePath="{}/object/medications/mineral/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="35" __referenceCounter="1" __sourcePath="{}/object/medications/mineral" _dataStructure="SINGLE_DIMENSIONAL_COLLECTION" _id="__id" _metadataParentId="e8d0774c-a9bd-42fc-9e06-75be0475dfe4" _parent_id="__parent_id" _type="Output" id="422ecfed-4b58-4df4-a21c-f27a1aa5c050">
+<Record fieldDelimiter="," name="mineral" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __artificialType="_parent_id" __systemManaged="true" name="__parent_id" type="string"/>
+<Field __index="37" __sourcePath="{}/object/medications/mineral/dose" containerType="SINGLE" label="dose" name="dose" type="string"/>
+<Field __index="35" __sourcePath="{}/object/medications/mineral/name" containerType="SINGLE" label="name" name="name" type="string"/>
+<Field __index="40" __sourcePath="{}/object/medications/mineral/pillCount" containerType="SINGLE" label="pillCount" name="pillCount" type="string"/>
+<Field __index="41" __sourcePath="{}/object/medications/mineral/refills" containerType="SINGLE" label="refills" name="refills" type="string"/>
+<Field __index="38" __sourcePath="{}/object/medications/mineral/route" containerType="SINGLE" label="route" name="route" type="string"/>
+<Field __index="39" __sourcePath="{}/object/medications/mineral/sig" containerType="SINGLE" label="sig" name="sig" type="string"/>
+<Field __index="36" __sourcePath="{}/object/medications/mineral/strength" containerType="SINGLE" label="strength" name="strength" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Input" id="7ad6f805-cced-40de-a4fc-172b2a66f347">
+<Record fieldDelimiter="," name="object" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" label="__id" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/object" _dataStructure="OBJECT" _id="__id" _type="Output" id="a3bbd6fe-4875-42f5-a603-44f88888d6db">
+<Record fieldDelimiter="," name="object" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" guiName="Foreach 'aceInhibitors' -&gt; 'aceInhibitors'" guiX="460" guiY="220" id="FOREACH_ACE_INHIBITORS_ACE_INHIBITORS" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.name = input.name;
+output.strength = input.strength;
+output.dose = input.dose;
+output.route = input.route;
+output.sig = input.sig;
+output.pillCount = input.pillCount;
+output.refills = input.refills;
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'antianginal' -&gt; 'antianginal'" guiX="460" guiY="320" id="FOREACH_ANTIANGINAL_ANTIANGINAL" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.name = input.name;
+output.strength = input.strength;
+output.dose = input.dose;
+output.route = input.route;
+output.sig = input.sig;
+output.pillCount = input.pillCount;
+output.refills = input.refills;
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'anticoagulants' -&gt; 'anticoagulants'" guiX="460" guiY="420" id="FOREACH_ANTICOAGULANTS_ANTICOAGULANTS" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.name = input.name;
+output.strength = input.strength;
+output.dose = input.dose;
+output.route = input.route;
+output.sig = input.sig;
+output.pillCount = input.pillCount;
+output.refills = input.refills;
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'betaBlocker' -&gt; 'betaBlocker'" guiX="460" guiY="520" id="FOREACH_BETA_BLOCKER_BETA_BLOCKER" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.name = input.name;
+output.strength = input.strength;
+output.dose = input.dose;
+output.route = input.route;
+output.sig = input.sig;
+output.pillCount = input.pillCount;
+output.refills = input.refills;
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'diuretic' -&gt; 'diuretic'" guiX="460" guiY="620" id="FOREACH_DIURETIC_DIURETIC" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.name = input.name;
+output.strength = input.strength;
+output.dose = input.dose;
+output.route = input.route;
+output.sig = input.sig;
+output.pillCount = input.pillCount;
+output.refills = input.refills;
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'imaging' -&gt; 'imaging'" guiX="460" guiY="920" id="FOREACH_IMAGING_IMAGING" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.name = input.name;
+output.time = input.time;
+output.location = input.location;
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'labs' -&gt; 'labs'" guiX="460" guiY="820" id="FOREACH_LABS_LABS" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.name = input.name;
+output.time = input.time;
+output.location = input.location;
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'medications' -&gt; 'medications'" guiX="460" guiY="120" id="FOREACH_MEDICATIONS_MEDICATIONS" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'mineral' -&gt; 'mineral'" guiX="460" guiY="720" id="FOREACH_MINERAL_MINERAL" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+output.__parent_id = input.__parent_id;
+//END -> DO NOT REMOVE
+output.name = input.name;
+output.strength = input.strength;
+output.dose = input.dose;
+output.route = input.route;
+output.sig = input.sig;
+output.pillCount = input.pillCount;
+output.refills = input.refills;
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Foreach 'object' -&gt; 'object'" guiX="460" guiY="20" id="FOREACH_OBJECT_OBJECT" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="JSON READER" guiX="20" guiY="20" id="JSON_READER0" type="JSON_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context xpath="/root">
+  <Context outPort="0" sequenceField="__id" xpath="object">
+    <Context generatedKey="__parent_id" outPort="1" parentKey="__id" sequenceField="__id" xpath="medications">
+      <Context generatedKey="__parent_id" outPort="2" parentKey="__id" sequenceField="__id" xpath="aceInhibitors">
+        <Mapping cloverField="name" trim="true" xpath="name"/>
+        <Mapping cloverField="strength" trim="true" xpath="strength"/>
+        <Mapping cloverField="dose" trim="true" xpath="dose"/>
+        <Mapping cloverField="route" trim="true" xpath="route"/>
+        <Mapping cloverField="sig" trim="true" xpath="sig"/>
+        <Mapping cloverField="pillCount" trim="true" xpath="pillCount"/>
+        <Mapping cloverField="refills" trim="true" xpath="refills"/>
+      </Context>
+      <Context generatedKey="__parent_id" outPort="3" parentKey="__id" sequenceField="__id" xpath="antianginal">
+        <Mapping cloverField="name" trim="true" xpath="name"/>
+        <Mapping cloverField="strength" trim="true" xpath="strength"/>
+        <Mapping cloverField="dose" trim="true" xpath="dose"/>
+        <Mapping cloverField="route" trim="true" xpath="route"/>
+        <Mapping cloverField="sig" trim="true" xpath="sig"/>
+        <Mapping cloverField="pillCount" trim="true" xpath="pillCount"/>
+        <Mapping cloverField="refills" trim="true" xpath="refills"/>
+      </Context>
+      <Context generatedKey="__parent_id" outPort="4" parentKey="__id" sequenceField="__id" xpath="anticoagulants">
+        <Mapping cloverField="name" trim="true" xpath="name"/>
+        <Mapping cloverField="strength" trim="true" xpath="strength"/>
+        <Mapping cloverField="dose" trim="true" xpath="dose"/>
+        <Mapping cloverField="route" trim="true" xpath="route"/>
+        <Mapping cloverField="sig" trim="true" xpath="sig"/>
+        <Mapping cloverField="pillCount" trim="true" xpath="pillCount"/>
+        <Mapping cloverField="refills" trim="true" xpath="refills"/>
+      </Context>
+      <Context generatedKey="__parent_id" outPort="5" parentKey="__id" sequenceField="__id" xpath="betaBlocker">
+        <Mapping cloverField="name" trim="true" xpath="name"/>
+        <Mapping cloverField="strength" trim="true" xpath="strength"/>
+        <Mapping cloverField="dose" trim="true" xpath="dose"/>
+        <Mapping cloverField="route" trim="true" xpath="route"/>
+        <Mapping cloverField="sig" trim="true" xpath="sig"/>
+        <Mapping cloverField="pillCount" trim="true" xpath="pillCount"/>
+        <Mapping cloverField="refills" trim="true" xpath="refills"/>
+      </Context>
+      <Context generatedKey="__parent_id" outPort="6" parentKey="__id" sequenceField="__id" xpath="diuretic">
+        <Mapping cloverField="name" trim="true" xpath="name"/>
+        <Mapping cloverField="strength" trim="true" xpath="strength"/>
+        <Mapping cloverField="dose" trim="true" xpath="dose"/>
+        <Mapping cloverField="route" trim="true" xpath="route"/>
+        <Mapping cloverField="sig" trim="true" xpath="sig"/>
+        <Mapping cloverField="pillCount" trim="true" xpath="pillCount"/>
+        <Mapping cloverField="refills" trim="true" xpath="refills"/>
+      </Context>
+      <Context generatedKey="__parent_id" outPort="7" parentKey="__id" sequenceField="__id" xpath="mineral">
+        <Mapping cloverField="name" trim="true" xpath="name"/>
+        <Mapping cloverField="strength" trim="true" xpath="strength"/>
+        <Mapping cloverField="dose" trim="true" xpath="dose"/>
+        <Mapping cloverField="route" trim="true" xpath="route"/>
+        <Mapping cloverField="sig" trim="true" xpath="sig"/>
+        <Mapping cloverField="pillCount" trim="true" xpath="pillCount"/>
+        <Mapping cloverField="refills" trim="true" xpath="refills"/>
+      </Context>
+    </Context>
+    <Context generatedKey="__parent_id" outPort="8" parentKey="__id" sequenceField="__id" xpath="labs">
+      <Mapping cloverField="name" trim="true" xpath="name"/>
+      <Mapping cloverField="time" trim="true" xpath="time"/>
+      <Mapping cloverField="location" trim="true" xpath="location"/>
+    </Context>
+    <Context generatedKey="__parent_id" outPort="9" parentKey="__id" sequenceField="__id" xpath="imaging">
+      <Mapping cloverField="name" trim="true" xpath="name"/>
+      <Mapping cloverField="time" trim="true" xpath="time"/>
+      <Mapping cloverField="location" trim="true" xpath="location"/>
+    </Context>
+  </Context>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[JSON]]></attr>
+<attr name="jsonSchemaURL"><![CDATA[.\src\test\resources\complexJSONSample.json]]></attr>
+</Node>
+<Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<object xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <clover:collection clover:name="medications">
+    <item clover:inPort="1" clover:key="__parent_id" clover:parentKey="__id">
+      <clover:collection clover:name="aceInhibitors">
+        <item clover:inPort="2" clover:key="__parent_id" clover:parentKey="__id">
+          <name>$2.name</name>
+          <strength>$2.strength</strength>
+          <dose>$2.dose</dose>
+          <route>$2.route</route>
+          <sig>$2.sig</sig>
+          <pillCount>$2.pillCount</pillCount>
+          <refills>$2.refills</refills>
+        </item>
+      </clover:collection>
+      <clover:collection clover:name="antianginal">
+        <item clover:inPort="3" clover:key="__parent_id" clover:parentKey="__id">
+          <name>$3.name</name>
+          <strength>$3.strength</strength>
+          <dose>$3.dose</dose>
+          <route>$3.route</route>
+          <sig>$3.sig</sig>
+          <pillCount>$3.pillCount</pillCount>
+          <refills>$3.refills</refills>
+        </item>
+      </clover:collection>
+      <clover:collection clover:name="anticoagulants">
+        <item clover:inPort="4" clover:key="__parent_id" clover:parentKey="__id">
+          <name>$4.name</name>
+          <strength>$4.strength</strength>
+          <dose>$4.dose</dose>
+          <route>$4.route</route>
+          <sig>$4.sig</sig>
+          <pillCount>$4.pillCount</pillCount>
+          <refills>$4.refills</refills>
+        </item>
+      </clover:collection>
+      <clover:collection clover:name="betaBlocker">
+        <item clover:inPort="5" clover:key="__parent_id" clover:parentKey="__id">
+          <name>$5.name</name>
+          <strength>$5.strength</strength>
+          <dose>$5.dose</dose>
+          <route>$5.route</route>
+          <sig>$5.sig</sig>
+          <pillCount>$5.pillCount</pillCount>
+          <refills>$5.refills</refills>
+        </item>
+      </clover:collection>
+      <clover:collection clover:name="diuretic">
+        <item clover:inPort="6" clover:key="__parent_id" clover:parentKey="__id">
+          <name>$6.name</name>
+          <strength>$6.strength</strength>
+          <dose>$6.dose</dose>
+          <route>$6.route</route>
+          <sig>$6.sig</sig>
+          <pillCount>$6.pillCount</pillCount>
+          <refills>$6.refills</refills>
+        </item>
+      </clover:collection>
+      <clover:collection clover:name="mineral">
+        <item clover:inPort="7" clover:key="__parent_id" clover:parentKey="__id">
+          <name>$7.name</name>
+          <strength>$7.strength</strength>
+          <dose>$7.dose</dose>
+          <route>$7.route</route>
+          <sig>$7.sig</sig>
+          <pillCount>$7.pillCount</pillCount>
+          <refills>$7.refills</refills>
+        </item>
+      </clover:collection>
+    </item>
+  </clover:collection>
+  <clover:collection clover:name="labs">
+    <item clover:inPort="8" clover:key="__parent_id" clover:parentKey="__id">
+      <name>$8.name</name>
+      <time>$8.time</time>
+      <location>$8.location</location>
+    </item>
+  </clover:collection>
+  <clover:collection clover:name="imaging">
+    <item clover:inPort="9" clover:key="__parent_id" clover:parentKey="__id">
+      <name>$9.name</name>
+      <time>$9.time</time>
+      <location>$9.location</location>
+    </item>
+  </clover:collection>
+</object>]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_ACE_INHIBITORS_ACE_INHIBITORS:0" guiBendpoints="" id="Edge5" inPort="Port 2 (in)" metadata="c2aa9cbb-69f5-46ff-9c59-6b840eea2d6a" outPort="Port 0 (out)" toNode="MAP_WRITER0:2"/>
+<Edge debugMode="true" fromNode="FOREACH_ANTIANGINAL_ANTIANGINAL:0" guiBendpoints="" id="Edge7" inPort="Port 3 (in)" metadata="97ac786e-8ef2-40d8-bf9b-4ea668aec2aa" outPort="Port 0 (out)" toNode="MAP_WRITER0:3"/>
+<Edge debugMode="true" fromNode="FOREACH_ANTICOAGULANTS_ANTICOAGULANTS:0" guiBendpoints="" id="Edge9" inPort="Port 4 (in)" metadata="0c8fc7ab-3502-4b37-8efd-8552211e1f02" outPort="Port 0 (out)" toNode="MAP_WRITER0:4"/>
+<Edge debugMode="true" fromNode="FOREACH_BETA_BLOCKER_BETA_BLOCKER:0" guiBendpoints="" id="Edge11" inPort="Port 5 (in)" metadata="89dcf578-2f33-4cc3-868c-19f63987e4a0" outPort="Port 0 (out)" toNode="MAP_WRITER0:5"/>
+<Edge debugMode="true" fromNode="FOREACH_DIURETIC_DIURETIC:0" guiBendpoints="" id="Edge13" inPort="Port 6 (in)" metadata="29a92bc0-eb57-4221-8a2f-e2805c3ca554" outPort="Port 0 (out)" toNode="MAP_WRITER0:6"/>
+<Edge debugMode="true" fromNode="FOREACH_IMAGING_IMAGING:0" guiBendpoints="" id="Edge19" inPort="Port 9 (in)" metadata="13f38530-d9d1-42d8-96ad-e6dc17909fbd" outPort="Port 0 (out)" toNode="MAP_WRITER0:9"/>
+<Edge debugMode="true" fromNode="FOREACH_LABS_LABS:0" guiBendpoints="" id="Edge17" inPort="Port 8 (in)" metadata="dbde7682-e49c-4390-acd7-16e2d12052e1" outPort="Port 0 (out)" toNode="MAP_WRITER0:8"/>
+<Edge debugMode="true" fromNode="FOREACH_MEDICATIONS_MEDICATIONS:0" guiBendpoints="" id="Edge3" inPort="Port 1 (in)" metadata="e8d0774c-a9bd-42fc-9e06-75be0475dfe4" outPort="Port 0 (out)" toNode="MAP_WRITER0:1"/>
+<Edge debugMode="true" fromNode="FOREACH_MINERAL_MINERAL:0" guiBendpoints="" id="Edge15" inPort="Port 7 (in)" metadata="422ecfed-4b58-4df4-a21c-f27a1aa5c050" outPort="Port 0 (out)" toNode="MAP_WRITER0:7"/>
+<Edge debugMode="true" fromNode="FOREACH_OBJECT_OBJECT:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="a3bbd6fe-4875-42f5-a603-44f88888d6db" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="7ad6f805-cced-40de-a4fc-172b2a66f347" outPort="Port 0 (out)" toNode="FOREACH_OBJECT_OBJECT:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:1" guiBendpoints="" id="Edge2" inPort="Port 0 (in)" metadata="229a61a5-8e6a-4b49-93b7-0dba67c4655e" outPort="Port 1 (out)" toNode="FOREACH_MEDICATIONS_MEDICATIONS:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:2" guiBendpoints="" id="Edge4" inPort="Port 0 (in)" metadata="30276d40-406f-4fc6-9d1f-a14065f7206c" outPort="Port 2 (out)" toNode="FOREACH_ACE_INHIBITORS_ACE_INHIBITORS:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:3" guiBendpoints="" id="Edge6" inPort="Port 0 (in)" metadata="4e893fb8-295f-4eb6-972e-9de10090877a" outPort="Port 3 (out)" toNode="FOREACH_ANTIANGINAL_ANTIANGINAL:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:4" guiBendpoints="" id="Edge8" inPort="Port 0 (in)" metadata="10bcae3b-8672-49c7-9d56-bd0aa3b46268" outPort="Port 4 (out)" toNode="FOREACH_ANTICOAGULANTS_ANTICOAGULANTS:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:5" guiBendpoints="" id="Edge10" inPort="Port 0 (in)" metadata="7ed39ddc-08cc-467e-a270-21d4df0860cd" outPort="Port 5 (out)" toNode="FOREACH_BETA_BLOCKER_BETA_BLOCKER:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:6" guiBendpoints="" id="Edge12" inPort="Port 0 (in)" metadata="e5ccad05-e820-4510-ae4e-7b03689e48d2" outPort="Port 6 (out)" toNode="FOREACH_DIURETIC_DIURETIC:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:7" guiBendpoints="" id="Edge14" inPort="Port 0 (in)" metadata="70916082-f9cf-4778-b923-5f9040f94d02" outPort="Port 7 (out)" toNode="FOREACH_MINERAL_MINERAL:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:8" guiBendpoints="" id="Edge16" inPort="Port 0 (in)" metadata="711c082a-e1bf-4858-8fc9-004be059af56" outPort="Port 8 (out)" toNode="FOREACH_LABS_LABS:0"/>
+<Edge debugMode="true" fromNode="JSON_READER0:9" guiBendpoints="" id="Edge18" inPort="Port 0 (in)" metadata="9f3080c5-4f53-4e6a-8f9f-70db59817e3b" outPort="Port 9 (out)" toNode="FOREACH_IMAGING_IMAGING:0"/>
+</Phase>
+</Graph>
