@@ -84,10 +84,11 @@ http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/
 			</jdbc-ee:outbound-endpoint>
 		</foreach>
 		<logger message="post db invocation" level="INFO" doc:name="log" />
+        <component class="com.whiteskylabs.jip.PauseTenSec"
+			doc:name="pause-ten-sec" />
 		<mulexml:object-to-xml-transformer
 			doc:name="Object to XML" />
-		<component class="com.whiteskylabs.jip.PauseTenSec"
-			doc:name="pause-ten-sec" />
+
 		<component class="com.whiteskylabs.jip.PauseThirtySec"
 			doc:name="pause-thirty-sec" />
 		<logger
