@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:jdbc-ee="http://www.mulesoft.org/schema/mule/ee/jdbc" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/jdbc http://www.mulesoft.org/schema/mule/ee/jdbc/current/mule-jdbc-ee.xsd
+http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <spring:beans>
+	<!-- poled datasource for xa trasactions-->
+        <spring:bean id="pooledDS" class="org.enhydra.jdbc.standard.StandardXADataSource" destroy-method="shutdown">
+            <spring:property name="driverName" value="oracle.jdbc.driver.OracleDriver"/>
+            <spring:property name="url" value="jdbc:oracle:thin:@//localhost:1521/XE"/>
+            <spring:property name="user" value="system"/>
+            <spring:property name="password" value="wsl"/>
+            <spring:property name="minCon" value="10"/>
+            <spring:property name="maxCon" value="100"/>
+        </spring:bean>
+		<!-- poled datasource -->
+        <spring:bean id="jdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource" >
+            <spring:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+            <spring:property name="url" value="jdbc:oracle:thin:@//localhost:1521/XE"/>
+            <spring:property name="username" value="system"/>
+            <spring:property name="password" value="wsl"/>
+            <spring:property name="initialSize" value="10"/>
+            <spring:property name="maxActive" value="100"/>
+            <spring:property name="maxIdle" value="10"/>
+        </spring:bean>
+    </spring:beans>
+
+
+<!-- oracle DS without pooled datsasource -->
+    <jdbc-ee:oracle-data-source  name="Oracle_Data_Source" user="system" password="wsl" url="jdbc:oracle:thin:@//localhost:1521/XE" transactionIsolation="UNSPECIFIED" doc:name="Oracle Data Source"/>
+	
+<!-- stress test made with dirrect datasources refered to databas connector -->	
+    <jdbc-ee:connector   name="Database" dataSource-ref="jdbcDataSource" validateConnections="true" queryTimeout="-1" pollingFrequency="0" doc:name="Database">
+ </jdbc-ee:connector>
+    <flow name="benckmark-webservice" doc:name="benckmark-webservice">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="soapbm" doc:name="http"  />
+        <cxf:jaxws-service doc:name="soap" serviceClass="com.wsl.ws.FetchDBData"/>
+      <!--   <logger message="...................................#[message.payload]" level="INFO" doc:name="Logger"/> -->
+        <jdbc-ee:outbound-endpoint exchange-pattern="request-response"  queryTimeout="-1" doc:name="retrieve-user-details" connector-ref="Database" queryKey="select-user">
+            <jdbc-ee:query key="select-user" value="select NAME,AGE,EMP_ID from SYSTEM.USER_DATA where id=#[message.payload]"/>
+        </jdbc-ee:outbound-endpoint>
+        <json:object-to-json-transformer doc:name="object-to-json"/>
+        <logger message=".................#[payload]" level="INFO" doc:name="log-ouput"/>
+    </flow>
+</mule>
