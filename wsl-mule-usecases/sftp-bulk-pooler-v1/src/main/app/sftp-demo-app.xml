@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+	xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns:sftp="http://www.mulesoft.org/schema/mule/sftp" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sftp http://www.mulesoft.org/schema/mule/sftp/current/mule-sftp.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+
+	<sftp:connector name="SFTPConnector"
+		validateConnections="false" doc:name="SFTP" pollingFrequency="15000">
+		<receiver-threading-profile
+			maxThreadsActive="1" maxBufferSize="10" maxThreadsIdle="1" threadTTL="600000"
+			poolExhaustedAction="WAIT" threadWaitTimeout="10000" />
+		<service-overrides messageReceiver="org.mule.transport.sftp.CustomSftpMessageReceiver" />
+	</sftp:connector>
+
+	<sftp:connector name="SFTPConnectorOB"
+		validateConnections="false" doc:name="SFTP" pollingFrequency="15000"
+		duplicateHandling="addSeqNo">
+		<dispatcher-threading-profile
+			maxThreadsActive="1" maxBufferSize="10" maxThreadsIdle="1" threadTTL="600000"
+			poolExhaustedAction="WAIT" threadWaitTimeout="-1" />
+	</sftp:connector>
+
+	<flow name="sftp-demo-appFlow1" doc:name="sftp-demo-appFlow1">
+		<sftp:inbound-endpoint host="localhost" port="2222"
+			path="/in" user="crushuser1" password="password" responseTimeout="10000"
+			connector-ref="SFTPConnector" doc:name="SFTP-inbound" archiveDir="/crushrootfolder/ach" />
+		<collection-splitter doc:name="Collection Splitter" />
+		<message-properties-transformer
+			doc:name="Message Properties">
+			<add-message-property key="FILENAME"
+				value="#[message.payload['fileName']]" />
+		</message-properties-transformer>
+		<vm:outbound-endpoint exchange-pattern="one-way"
+			path="fileDataQueue" doc:name="VM" />
+	</flow>
+	<flow name="sftp-demo-appFlow2" doc:name="sftp-demo-appFlow2"
+		processingStrategy="synchronous">
+		<vm:inbound-endpoint exchange-pattern="one-way"
+			doc:name="VM" path="fileDataQueue" />
+		<component class="org.mule.transport.sftp.GZIPDecompress"
+			doc:name="Java Component " />
+		<object-to-string-transformer doc:name="Object to String" />
+		<!-- host="localhost" port="2222" path="/out" user="crushuser1" password="password" -->
+		<sftp:outbound-endpoint exchange-pattern="request-response"
+			responseTimeout="10000" address="sftp://crushuser1:password@localhost:2222/out"
+			connector-ref="SFTPConnectorOB" duplicateHandling="addSeqNo"
+			doc:name="SFTP-Outbound" outputPattern="#[message.inboundProperties['fileName']]" />
+		<catch-exception-strategy doc:name="Catch Exception Strategy">
+			<logger
+				message="in Default Exception block::::::::::::::::::#[exception.getCause().getMessage()]::::::::::::::::::::::::::"
+				level="INFO" doc:name="Logs Exception cause" />
+			<flow-ref name="sftp-io-error-Flow" doc:name="Move current files to error folder" />
+		</catch-exception-strategy>
+		<!-- <choice-exception-strategy doc:name="Choice Exception Strategy"> <catch-exception-strategy 
+			when="#[exception.causedBy(java.io.IOException)]" doc:name="Catch Exception 
+			Strategy" enableNotifications="false"> <logger message="in IOException block 
+			::::::::::::::::::#[exception.getCause().getMessage()]::::::::::::::::::::::::::" 
+			level="INFO" doc:name="Logs Exception cause" /> </catch-exception-strategy> 
+			<catch-exception-strategy doc:name="Catch Exception Strategy" enableNotifications="false"> 
+			<logger message="in Default Exception block::::::::::::::::::#[exception.getCause().getMessage()]::::::::::::::::::::::::::" 
+			level="INFO" doc:name="Logs Exception cause" /> <flow-ref name="sftp-io-error-Flow" 
+			doc:name="Move current files to error folder" /> </catch-exception-strategy> 
+			</choice-exception-strategy> -->
+
+	</flow>
+	<flow name="sftp-io-error-Flow" doc:name="sftp-io-error-Flow"
+		processingStrategy="synchronous">
+		<logger
+			message="#[flow.name] :::::::::::::::::::::#[payload]:::::::::::::::::::::"
+			level="INFO" doc:name="Logs payload" />
+		<file:outbound-endpoint path="./err"
+			responseTimeout="10000" doc:name="File-err-outbound" />
+	</flow>
+</mule>
+  
