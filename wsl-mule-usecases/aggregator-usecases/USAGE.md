@@ -20,15 +20,10 @@ Running the application
 =======================
 
 1. Right click on the project and select **Run As Mule Application**.
-2. Check the console to see output when the application starts.
 
-	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	+ Started app 'untilsuccessful'  	           +
-	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	
-3. Hit the endpoint at<http://localhost:8084/collection-aggregator> to invoke Collection Aggregator use case.
+2. Hit the endpoint at<http://localhost:8084/collection-aggregator> to invoke Collection Aggregator use case.
 
-4. To trigger Message Chunk Aggregator usecase, drop a file in input folder as configured in File inbound connector.
+3. To trigger Message Chunk Aggregator usecase, drop a file in input folder as configured in File inbound connector.
 			  
 Resources
 ===========
