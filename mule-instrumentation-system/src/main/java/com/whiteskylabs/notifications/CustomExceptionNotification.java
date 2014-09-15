@@ -19,11 +19,11 @@ public class CustomExceptionNotification implements ExceptionNotificationListene
 
 		
 		Date invocationTime = new Date(excenotification.getTimestamp());
-		String exceptionMessge = excenotification.getException().getMessage();
+//		String exceptionMessge = excenotification.getException().getMessage();
 		Throwable exception = excenotification.getException();
 		
 		if(log.isDebugEnabled()){
-			log.debug("Exception occured in flow '"+flowName.getFlowName()+"' at "+invocationTime+" for Message ID '"+messageId.getmessageId()+"'and Exception is "+exception.getStackTrace());
+//			log.debug("Exception occured in flow '"+flowName.getFlowName()+"' at "+invocationTime+" for Message ID '"+messageId.getmessageId()+"'and Exception is "+exception.getStackTrace());
 		}
 		else if(log.isInfoEnabled()){
 			
@@ -34,7 +34,7 @@ public class CustomExceptionNotification implements ExceptionNotificationListene
 			    log.info("exception is "+i.toString());
 			    log.info("############ Exception Trace #############");
 			}
-			log.info("Exception occured in flow '"+flowName.getFlowName()+"' at "+invocationTime+" for Message ID '"+messageId.getmessageId()+"'and Exception is "+exception.getStackTrace());
+//			log.info("Exception occured in flow '"+flowName.getFlowName()+"' at "+invocationTime+" for Message ID '"+messageId.getmessageId()+"'and Exception is "+exception.getStackTrace());
 		}
 
 		
