@@ -1,5 +1,6 @@
 package com.whiteskylabs.notifications;
 
+import java.io.IOException;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -10,58 +11,15 @@ import com.whiteskylabs.loggermanager.LogMessageFormat;
 
 public class CustomEndpointNotification implements
 		EndpointMessageNotificationListener<EndpointMessageNotification> {
-	private String messageId;
-	private String enablePayload;
-	private String enableEndpoint;
-	private String isJSONFormat;
-	private String isXMLFormat;
 
-	public String getMessageId() {
-		return messageId;
+	private InstrumentationProperties props;
+
+	public InstrumentationProperties getProps() {
+		return props;
 	}
 
-	public void setMessageId(String messageId) {
-		this.messageId = messageId;
-	}
-
-	public String getEnablePayload() {
-		return enablePayload;
-	}
-
-	public String getEnableEndpoint() {
-		return enableEndpoint;
-	}
-
-	public void setEnableEndpoint(String enableEndpoint) {
-		this.enableEndpoint = enableEndpoint;
-	}
-
-	public void setEnablePayload(String enablePayload) {
-		this.enablePayload = enablePayload;
-	}
-
-	public String getmessageId() {
-		return messageId;
-	}
-
-	public void setmessageId(String messageId) {
-		this.messageId = messageId;
-	}
-
-	public String getIsJSONFormat() {
-		return isJSONFormat;
-	}
-
-	public void setIsJSONFormat(String isJSONFormat) {
-		this.isJSONFormat = isJSONFormat;
-	}
-
-	public String getIsXMLFormat() {
-		return isXMLFormat;
-	}
-
-	public void setIsXMLFormat(String isXMLFormat) {
-		this.isXMLFormat = isXMLFormat;
+	public void setProps(InstrumentationProperties props) {
+		this.props = props;
 	}
 
 	private static Logger log = Logger
@@ -69,38 +27,33 @@ public class CustomEndpointNotification implements
 
 	@Override
 	public void onNotification(EndpointMessageNotification endnotification) {
+		try {
+			if (props.getPropValue("enableEndpointLogging").equalsIgnoreCase(
+					"true")) {
+				String endpointClassName = endnotification
+						.getImmutableEndpoint().getName();
+				String flowName = endnotification.getFlowConstruct().getName();
+				Date timeStamp = new Date(endnotification.getTimestamp());
+				String messageId = endnotification.getSource().getUniqueId();
+				String payload = endnotification.getSource()
+						.getPayloadAsString();
+				
+				LogMessageFormat logMessageFormat = new LogMessageFormat();
 
-		if (enableEndpoint.equalsIgnoreCase("true")) {
+				log.info(logMessageFormat.getLogMessage(endpointClassName,
+						messageId, timeStamp.toString(), flowName, payload,
+						Boolean.valueOf(props
+								.getPropValue("enablePayloadLogging")), props
+								.getPropValue("loggingFormat")));
 
-			String endpointClassName = endnotification.getImmutableEndpoint()
-					.getName();
-			String flowName = endnotification.getFlowConstruct().getName();
-			Date timeStamp = new Date(endnotification.getTimestamp());
-			messageId = endnotification.getSource().getUniqueId();
-			setmessageId(messageId);
-
-			String payload = (String) endnotification.getSource().getPayload();
-			LogMessageFormat logMessageFormat = new LogMessageFormat();
-			
-			if (enablePayload.equalsIgnoreCase("true")) {
-				if(isJSONFormat.equalsIgnoreCase("true")){
-					log.info(logMessageFormat.getJSONLogMessage(endpointClassName,
-							messageId, timeStamp.toString(), flowName, payload, true));
-				}
-				else if(isXMLFormat.equalsIgnoreCase("true")){
-					log.info(logMessageFormat.getXMLLogMessage(endpointClassName,
-							messageId, timeStamp.toString(), flowName, payload, true));
-				}
-			} else if (getEnablePayload() == "false") {
-				if(isJSONFormat.equalsIgnoreCase("true")){
-					log.info(logMessageFormat.getJSONLogMessage(endpointClassName,
-							messageId, timeStamp.toString(), flowName, payload, false));
-				}
-				else if(isXMLFormat.equalsIgnoreCase("true")){
-					log.info(logMessageFormat.getXMLLogMessage(endpointClassName,
-							messageId, timeStamp.toString(), flowName, payload, false));
-				}
 			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
