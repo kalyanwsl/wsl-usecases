@@ -19,7 +19,7 @@ public class CustomExceptionNotification implements ExceptionNotificationListene
 
 		
 		Date invocationTime = new Date(excenotification.getTimestamp());
-		String exceptionMessge = excenotification.getException().getMessage();
+//		String exceptionMessge = excenotification.getException().getMessage();
 		Throwable exception = excenotification.getException();
 		
 		if(log.isDebugEnabled()){
