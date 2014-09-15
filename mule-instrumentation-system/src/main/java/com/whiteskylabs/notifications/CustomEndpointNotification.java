@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.mule.api.context.notification.EndpointMessageNotificationListener;
 import org.mule.context.notification.EndpointMessageNotification;
 
+import com.whiteskylabs.loggermanager.InstrumentationProperties;
 import com.whiteskylabs.loggermanager.LogMessageFormat;
 
 public class CustomEndpointNotification implements

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.mule.api.context.notification.MessageProcessorNotificationListener;
 import org.mule.context.notification.MessageProcessorNotification;
 
+import com.whiteskylabs.loggermanager.InstrumentationProperties;
 import com.whiteskylabs.loggermanager.LogMessageFormat;
 
 public class CustomMessageProcessorNotification implements
