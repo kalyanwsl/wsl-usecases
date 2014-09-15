@@ -8,6 +8,11 @@ import javax.xml.bind.Marshaller;
 
 import org.json.simple.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 public class LogMessageFormat {
 
 	public String getXMLLogMessage(String component,
@@ -30,7 +35,7 @@ public class LogMessageFormat {
 			jaxbContext = JAXBContext.newInstance(MISLogger.class);
 		
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-			
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			StringWriter writer = new StringWriter();
 			jaxbMarshaller.marshal(misLogger, writer);
 			
@@ -39,7 +44,7 @@ public class LogMessageFormat {
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-//		System.out.println("XML Message: \n"+stripMessage);
+
 		return stripMessage;
 	}
 
@@ -55,7 +60,25 @@ public class LogMessageFormat {
 		if(isPayloadEnabled){
 			json.put("payload", payload);
 		}
-//		System.out.println(json);
-		return json.toJSONString();
+
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		JsonParser jp = new JsonParser();
+		JsonElement je = jp.parse(json.toJSONString());
+		String prettyJsonString = gson.toJson(je);
+		
+		return prettyJsonString;
 	}
+	
+	public String getLogMessage(String component,
+			String messageId, String timeStamp, String flowName, String payload, boolean isPayloadEnabled,String loggingFormat) {
+		
+		if(loggingFormat.equalsIgnoreCase("json"))
+			return getJSONLogMessage(component,messageId,timeStamp,flowName,payload,isPayloadEnabled);
+		else if (loggingFormat.equalsIgnoreCase("xml"))
+			return getXMLLogMessage(component,messageId,timeStamp,flowName,payload,isPayloadEnabled);
+		else
+			return "invalid logging format.";
+		
+	}
+	
 }
