@@ -3,16 +3,19 @@ package com.whiteskylabs.loggermanager;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="mis-logger")
-public class MISLogger {
+@XmlRootElement(name="instrumentation-logger")
+public class InstrumentationBO {
 
 	String flowName;
 	String component;
 	String messageID;
 	String timeStamp;
-	
-//	@XmlJavaTypeAdapter(value=CDATAAdapter.class)
 	String payload;
+	String actionName;
+	String execptionCause;
+	String execptionMessage;
+	String execptionStackTrace;
+	
 	
 	public String getFlowName() {
 		return flowName;
@@ -53,7 +56,37 @@ public class MISLogger {
 	public void setPayload(String payload) {
 		this.payload = payload;
 	}
-	
-	
+
+	public String getActionName() {
+		return actionName;
+	}
+	@XmlElement
+	public void setActionName(String actionName) {
+		this.actionName = actionName;
+	}
+
+	public String getExecptionCause() {
+		return execptionCause;
+	}
+	@XmlElement
+	public void setExecptionCause(String execptionCause) {
+		this.execptionCause = execptionCause;
+	}
+
+	public String getExecptionMessage() {
+		return execptionMessage;
+	}
+	@XmlElement
+	public void setExecptionMessage(String execptionMessage) {
+		this.execptionMessage = execptionMessage;
+	}
+
+	public String getExecptionStackTrace() {
+		return execptionStackTrace;
+	}
+	@XmlElement
+	public void setExecptionStackTrace(String execptionStackTrace) {
+		this.execptionStackTrace = execptionStackTrace;
+	}
 	
 }
