@@ -16,10 +16,16 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 	private static Logger log = Logger
 			.getLogger(EndpointNotificationReporter.class.getName());
 	
+	/** log Endpoint data when it is invoked  
+	 * @param endnotification Endpoint notification object
+	 * @throws IOException
+	 * @throws Exception
+	 */
 	public void logEndpointNotificationReport(
 			EndpointMessageNotification endnotification) throws IOException,
 			Exception {
 
+		// Get Endpoint notification details.
 		String endpointClassName = endnotification.getImmutableEndpoint()
 				.getName();
 		String flowName = endnotification.getFlowConstruct().getName();
@@ -36,6 +42,8 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 		instrumentationBO.setTimeStamp(timeStamp.toString());
 		instrumentationBO.setMessageID(messageID);
 		instrumentationBO.setActionName(actionName);
+		
+		// Set payload to instrumentaion object if payload flag is enabled.
 		if (Boolean
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
 			instrumentationBO.setPayload(payload);
@@ -44,14 +52,6 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();
 		log.info(instrumentationLoggerFactory.getLogMessage(instrumentationBO));
 
-		/*
-		 * LogMessageFormat logMessageFormat = new LogMessageFormat();
-		 * 
-		 * log.info(logMessageFormat.getLogMessage(endpointClassName, messageID,
-		 * timeStamp.toString(), flowName, payload,
-		 * Boolean.valueOf(props.getPropValue("enablePayloadLogging")),
-		 * props.getPropValue("loggingFormat")));
-		 */
 	}
 
 }

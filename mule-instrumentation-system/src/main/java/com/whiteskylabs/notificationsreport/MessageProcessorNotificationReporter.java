@@ -16,9 +16,14 @@ public class MessageProcessorNotificationReporter extends
 	private static Logger log = Logger
 			.getLogger(MessageProcessorNotificationReporter.class.getName());
 
+	/** Log Message Processor data when a message processor is invoked
+	 * @param mpnotification Message Processor notification  object
+	 * @throws Exception
+	 */
 	public void logMessageProcessorReport(
 			MessageProcessorNotification mpnotification) throws Exception {
 
+		// Get Message Processor details.
 		String messageProcessorName = mpnotification.getProcessor().getClass()
 				.getName();
 		String flowName = mpnotification.getSource().getFlowConstruct()
@@ -39,6 +44,7 @@ public class MessageProcessorNotificationReporter extends
 		instrumentationBO.setMessageID(messageID);
 		instrumentationBO.setActionName(actionName);
 		
+		// Set payload to instrumentaion object if payload flag is enabled.
 		if (Boolean
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
 			instrumentationBO.setPayload(payload);
@@ -46,15 +52,16 @@ public class MessageProcessorNotificationReporter extends
 
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();
 
+		// Log pre invoke and post invoke data of Message Processor at DEBUG level 
 		if (log.isDebugEnabled()) { 
 			log.debug(instrumentationLoggerFactory.getLogMessage(instrumentationBO));
 			
-		} else if (log.isInfoEnabled()
+		} 
+		// Log only pre invoke data of Message Processor at INFO level
+		else if (log.isInfoEnabled()
 				&& mpnotification.getActionName().equals(
 						InstrumentationConstants.IS_MESSAGE_PROCESSOR_PRE_INVOKE)) {
 			log.info(instrumentationLoggerFactory.getLogMessage(instrumentationBO));
-			
-		
 			
 		}
 
