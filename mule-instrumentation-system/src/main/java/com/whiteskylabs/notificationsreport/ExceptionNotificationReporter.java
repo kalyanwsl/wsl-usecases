@@ -11,13 +11,16 @@ import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
 
+/**
+ *	Log details when Exception is occured. 
+ */
 public class ExceptionNotificationReporter extends InstrumentationProperties {
 
 	private static Logger log = Logger
 			.getLogger(ExceptionNotificationReporter.class.getName());
 
 	
-	/** Log Exeception data when an Exception is occurred.
+	/** Log Exeception when an Exception is occurred.
 	 * @param execNotificationObj Exception Notification object
 	 * @throws JAXBException
 	 * @throws IOException

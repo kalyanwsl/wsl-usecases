@@ -7,9 +7,14 @@ import java.util.Properties;
 
 import com.whiteskylabs.common.InstrumentationConstants;
 
+/**
+ * Loads Instrumentation properties file and reads specified property value
+ */
 public class InstrumentationProperties {
 
-	/** Get Property value
+	/**
+	 * Get Property value
+	 * 
 	 * @param key
 	 * @return
 	 * @throws IOException
@@ -18,7 +23,6 @@ public class InstrumentationProperties {
 
 		Properties prop = new Properties();
 		String propFileName = InstrumentationConstants.INSTRUMENTATION_PROPERTIES_FILE_NAME;
-
 
 		InputStream inputStream = getClass().getClassLoader()
 				.getResourceAsStream(propFileName);

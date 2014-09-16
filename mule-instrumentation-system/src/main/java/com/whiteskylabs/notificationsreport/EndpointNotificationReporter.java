@@ -11,6 +11,9 @@ import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
 
+/**
+ *	Log component data when Endpoint is invoked. 
+ */
 public class EndpointNotificationReporter extends InstrumentationProperties {
 
 	private static Logger log = Logger

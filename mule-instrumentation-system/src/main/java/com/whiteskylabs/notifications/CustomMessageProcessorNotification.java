@@ -8,6 +8,9 @@ import org.mule.context.notification.MessageProcessorNotification;
 import com.whiteskylabs.common.InstrumentationConstants;
 import com.whiteskylabs.notificationsreport.MessageProcessorNotificationReporter;
 
+/**
+ *	Initializes when Message Processor component is invoked.
+ */
 public class CustomMessageProcessorNotification extends
 		MessageProcessorNotificationReporter implements
 		MessageProcessorNotificationListener<MessageProcessorNotification> {
