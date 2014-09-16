@@ -6,6 +6,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+/**
+ *	Convert InstrumentationBO object into XML message
+ */
 public class LogXMLMessageFormatImpl implements ILogMessageFormat {
 
 	@Override

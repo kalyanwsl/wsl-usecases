@@ -3,6 +3,10 @@ package com.whiteskylabs.loggermanager;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * POJO class of Instrumentation logger properties
+ *
+ */
 @XmlRootElement(name="instrumentation-logger")
 public class InstrumentationBO {
 

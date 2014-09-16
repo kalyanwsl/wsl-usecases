@@ -8,6 +8,9 @@ import org.mule.context.notification.EndpointMessageNotification;
 import com.whiteskylabs.common.InstrumentationConstants;
 import com.whiteskylabs.notificationsreport.EndpointNotificationReporter;
 
+/**
+ *	Initializes when Endpoint component is invoked.
+ */
 public class CustomEndpointNotification extends EndpointNotificationReporter implements
 		EndpointMessageNotificationListener<EndpointMessageNotification> {
 	

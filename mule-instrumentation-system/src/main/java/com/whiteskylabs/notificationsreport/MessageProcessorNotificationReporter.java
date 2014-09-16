@@ -10,6 +10,9 @@ import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
 
+/**
+ *	Log component data when Message Processor is invoked. 
+ */
 public class MessageProcessorNotificationReporter extends
 		InstrumentationProperties {
 

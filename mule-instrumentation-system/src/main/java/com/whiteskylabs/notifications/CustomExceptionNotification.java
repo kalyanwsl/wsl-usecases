@@ -9,6 +9,9 @@ import org.mule.context.notification.ExceptionNotification;
 
 import com.whiteskylabs.notificationsreport.ExceptionNotificationReporter;
 
+/**
+ *	Initializes when Exception is occurred.
+ */
 public class CustomExceptionNotification extends ExceptionNotificationReporter
 		implements ExceptionNotificationListener<ExceptionNotification> {
 

@@ -2,6 +2,9 @@ package com.whiteskylabs.loggermanager;
 
 import javax.xml.bind.JAXBException;
 
+/**
+ *  Generate Log Message.
+ */
 public interface ILogMessageFormat {
 
 	/** Generate Log Message with respective message format
