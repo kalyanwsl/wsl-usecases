@@ -1,59 +1,29 @@
 package com.whiteskylabs.notifications;
 
-import java.util.Date;
+import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import javax.xml.bind.JAXBException;
+
 import org.mule.api.context.notification.ExceptionNotificationListener;
 import org.mule.context.notification.ExceptionNotification;
 
-public class CustomExceptionNotification implements ExceptionNotificationListener<ExceptionNotification>{
-	
-	private CustomEndpointNotification messageId;
-	private CustomMessageProcessorNotification flowName;
-	
-	private static Logger log = Logger.getLogger(CustomExceptionNotification.class.getName());
-	
+import com.whiteskylabs.notificationsreport.ExceptionNotificationReporter;
+
+public class CustomExceptionNotification extends ExceptionNotificationReporter
+		implements ExceptionNotificationListener<ExceptionNotification> {
+
 	@Override
 	public void onNotification(
-			org.mule.context.notification.ExceptionNotification excenotification) {
+			org.mule.context.notification.ExceptionNotification execptionNotification) {
 
-		
-		Date invocationTime = new Date(excenotification.getTimestamp());
-//		String exceptionMessge = excenotification.getException().getMessage();
-		Throwable exception = excenotification.getException();
-		
-		if(log.isDebugEnabled()){
-//			log.debug("Exception occured in flow '"+flowName.getFlowName()+"' at "+invocationTime+" for Message ID '"+messageId.getmessageId()+"'and Exception is "+exception.getStackTrace());
-		}
-		else if(log.isInfoEnabled()){
+		// initiates exceptions to log
+		try {
+			logExceptionNotificationReport(execptionNotification);
 			
-			StackTraceElement[] exceptionTrace=exception.getStackTrace();
-			for (StackTraceElement i : exceptionTrace)
-			{
-				log.info("############ Exception Trace #############");
-			    log.info("exception is "+i.toString());
-			    log.info("############ Exception Trace #############");
-			}
-//			log.info("Exception occured in flow '"+flowName.getFlowName()+"' at "+invocationTime+" for Message ID '"+messageId.getmessageId()+"'and Exception is "+exception.getStackTrace());
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
-		
 	}
-
-	public CustomEndpointNotification getMessageId() {
-		return messageId;
-	}
-
-	public void setMessageId(CustomEndpointNotification messageId) {
-		this.messageId = messageId;
-	}
-
-	public CustomMessageProcessorNotification getFlowName() {
-		return flowName;
-	}
-
-	public void setFlowName(CustomMessageProcessorNotification flowName) {
-		this.flowName = flowName;
-	}
-
 }

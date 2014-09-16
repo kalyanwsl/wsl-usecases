@@ -10,6 +10,7 @@ public class InstrumentationConstants {
 	public static final String LOGGING_FORMAT = "loggingFormat";
 	public static final String XML_FORMAT = "xml";
 	public static final String JSON_FORMAT = "json";
+	public static final String INSTRUMENTATION_PROPERTIES_FILE_NAME = "Instrumentation.properties";
 	
 	
 }

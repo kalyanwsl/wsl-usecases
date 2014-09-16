@@ -16,12 +16,18 @@ public class CustomMessageProcessorNotification extends
 	public void onNotification(MessageProcessorNotification mpnotification) {
 
 		try {
-			if (Boolean.parseBoolean(getPropValue(InstrumentationConstants.IS_MESSAGE_PROCESSOR_LOGGING_ENABLED))
-					&& !mpnotification.getProcessor().toString()
-							.contains(InstrumentationConstants.DEFAULT_OUTBOUND_ENDPOINT)) {
 
+			// If Message processor logging flag enabled and
+			// discard if message processor is an endpoint.
+			if (Boolean
+					.parseBoolean(getPropValue(InstrumentationConstants.IS_MESSAGE_PROCESSOR_LOGGING_ENABLED))
+					&& !mpnotification
+							.getProcessor()
+							.toString()
+							.contains(
+									InstrumentationConstants.DEFAULT_OUTBOUND_ENDPOINT)) {
 				logMessageProcessorReport(mpnotification);
-				
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
