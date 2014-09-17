@@ -6,29 +6,35 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import com.whiteskylabs.exceptions.InstrumentationException;
+
 /**
- *	Convert InstrumentationBO object into XML message
+ * Convert InstrumentationBO object into XML message
  */
 public class LogXMLMessageFormatImpl implements ILogMessageFormat {
 
 	@Override
 	public String generateLogMessage(InstrumentationBO instrumentationBO)
-			throws JAXBException {
+			throws InstrumentationException {
 
-		JAXBContext jaxbContext = JAXBContext
-				.newInstance(InstrumentationBO.class);
+		try {
+			JAXBContext jaxbContext = JAXBContext
+					.newInstance(InstrumentationBO.class);
 
-		// Generate XML log message from instrumentation.
-		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-		jaxbMarshaller.setProperty("com.sun.xml.bind.xmlDeclaration",
-				Boolean.FALSE);
-		// Make XML pretty format.
-		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-				Boolean.TRUE);
-		StringWriter writer = new StringWriter();
-		jaxbMarshaller.marshal(instrumentationBO, writer);
+			// Generate XML log message from instrumentation.
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty("com.sun.xml.bind.xmlDeclaration",
+					Boolean.FALSE);
+			// Make XML pretty format.
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+					Boolean.TRUE);
+			StringWriter writer = new StringWriter();
+			jaxbMarshaller.marshal(instrumentationBO, writer);
 
-		return writer.toString();
+			return writer.toString();
+		} catch (JAXBException jbe) {
+			throw new InstrumentationException(jbe.getMessage(), jbe);
+		}
 	}
 
 }

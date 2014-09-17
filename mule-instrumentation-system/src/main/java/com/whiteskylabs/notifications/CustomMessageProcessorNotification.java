@@ -1,11 +1,11 @@
 package com.whiteskylabs.notifications;
 
-import java.io.IOException;
-
+import org.apache.log4j.Logger;
 import org.mule.api.context.notification.MessageProcessorNotificationListener;
 import org.mule.context.notification.MessageProcessorNotification;
 
 import com.whiteskylabs.common.InstrumentationConstants;
+import com.whiteskylabs.exceptions.InstrumentationException;
 import com.whiteskylabs.notificationsreport.MessageProcessorNotificationReporter;
 
 /**
@@ -15,11 +15,13 @@ public class CustomMessageProcessorNotification extends
 		MessageProcessorNotificationReporter implements
 		MessageProcessorNotificationListener<MessageProcessorNotification> {
 
+	private static Logger log = Logger
+			.getLogger(CustomMessageProcessorNotification.class.getName());
+	
 	@Override
 	public void onNotification(MessageProcessorNotification mpnotification) {
 
 		try {
-
 			// If Message processor logging flag enabled and
 			// discard if message processor is an endpoint.
 			if (Boolean
@@ -32,10 +34,9 @@ public class CustomMessageProcessorNotification extends
 				logMessageProcessorReport(mpnotification);
 
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (InstrumentationException ie) {
+//			ie.printStackTrace();
+			log.error(ie.getMessage(),ie);
 		}
 	}
 }

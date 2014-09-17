@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.mule.context.notification.MessageProcessorNotification;
 
 import com.whiteskylabs.common.InstrumentationConstants;
+import com.whiteskylabs.exceptions.InstrumentationException;
 import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
@@ -21,10 +22,10 @@ public class MessageProcessorNotificationReporter extends
 
 	/** Log Message Processor data when a message processor is invoked
 	 * @param mpnotification Message Processor notification  object
-	 * @throws Exception
+	 * @throws InstrumentationException 
 	 */
 	public void logMessageProcessorReport(
-			MessageProcessorNotification mpnotification) throws Exception {
+			MessageProcessorNotification mpnotification) throws InstrumentationException {
 
 		// Get Message Processor details.
 		String messageProcessorName = mpnotification.getProcessor().getClass()
@@ -34,8 +35,6 @@ public class MessageProcessorNotificationReporter extends
 		Date timeStamp = new Date(mpnotification.getTimestamp());
 		String messageID = mpnotification.getSource().getMessage()
 				.getUniqueId();
-		String payload = mpnotification.getSource().getMessage()
-				.getPayloadAsString();
 		String actionName = mpnotification.getActionName();
 		
 		//Prepare Instrumentation Object with Message Processor notification data.
@@ -50,7 +49,13 @@ public class MessageProcessorNotificationReporter extends
 		// Set payload to instrumentaion object if payload flag is enabled.
 		if (Boolean
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
-			instrumentationBO.setPayload(payload);
+			try {
+				String payload = mpnotification.getSource().getMessage()
+						.getPayloadAsString();
+				instrumentationBO.setPayload(payload);
+			} catch (Exception e) {
+				throw new InstrumentationException(e.getMessage(), e);
+			}
 		}
 
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();
