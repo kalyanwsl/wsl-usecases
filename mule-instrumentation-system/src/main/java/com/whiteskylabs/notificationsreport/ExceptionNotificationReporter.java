@@ -1,12 +1,9 @@
 package com.whiteskylabs.notificationsreport;
 
-import java.io.IOException;
-
-import javax.xml.bind.JAXBException;
-
 import org.apache.log4j.Logger;
 import org.mule.context.notification.ExceptionNotification;
 
+import com.whiteskylabs.exceptions.InstrumentationException;
 import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
@@ -20,14 +17,15 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 			.getLogger(ExceptionNotificationReporter.class.getName());
 
 	
-	/** Log Exeception when an Exception is occurred.
-	 * @param execNotificationObj Exception Notification object
-	 * @throws JAXBException
-	 * @throws IOException
+	/**
+	 * Log Exeception when an Exception is occurred.
+	 * 
+	 * @param execNotificationObj
+	 *            Exception Notification object
+	 * @throws InstrumentationException
 	 */
 	public void logExceptionNotificationReport(
-			ExceptionNotification execNotificationObj) throws JAXBException,
-			IOException {
+			ExceptionNotification execNotificationObj) throws InstrumentationException {
 
 		String execptionMessage = execNotificationObj.getException()
 				.getMessage();

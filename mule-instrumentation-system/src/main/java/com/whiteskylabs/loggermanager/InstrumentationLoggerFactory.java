@@ -1,10 +1,7 @@
 package com.whiteskylabs.loggermanager;
 
-import java.io.IOException;
-
-import javax.xml.bind.JAXBException;
-
 import com.whiteskylabs.common.InstrumentationConstants;
+import com.whiteskylabs.exceptions.InstrumentationException;
 
 /**
  * This class extends InstrumentationProperties class that reads required
@@ -19,11 +16,10 @@ public class InstrumentationLoggerFactory extends InstrumentationProperties {
 	 * @param instrumentationBO
 	 *            Request notification properties
 	 * @return Log message
-	 * @throws JAXBException
-	 * @throws IOException
+	 * @throws InstrumentationException
 	 */
 	public String getLogMessage(InstrumentationBO instrumentationBO)
-			throws JAXBException, IOException {
+			throws InstrumentationException {
 
 		// If message format configured to JSON prepare JSON log message.
 		if (getPropValue(InstrumentationConstants.LOGGING_MESSAGE_FORMAT)

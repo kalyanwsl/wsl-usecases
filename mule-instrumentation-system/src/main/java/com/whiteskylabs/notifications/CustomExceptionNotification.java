@@ -1,12 +1,10 @@
 package com.whiteskylabs.notifications;
 
-import java.io.IOException;
-
-import javax.xml.bind.JAXBException;
-
+import org.apache.log4j.Logger;
 import org.mule.api.context.notification.ExceptionNotificationListener;
 import org.mule.context.notification.ExceptionNotification;
 
+import com.whiteskylabs.exceptions.InstrumentationException;
 import com.whiteskylabs.notificationsreport.ExceptionNotificationReporter;
 
 /**
@@ -15,6 +13,8 @@ import com.whiteskylabs.notificationsreport.ExceptionNotificationReporter;
 public class CustomExceptionNotification extends ExceptionNotificationReporter
 		implements ExceptionNotificationListener<ExceptionNotification> {
 
+	private static Logger log = Logger
+			.getLogger(CustomExceptionNotification.class.getName());
 	@Override
 	public void onNotification(
 			org.mule.context.notification.ExceptionNotification execptionNotification) {
@@ -22,11 +22,11 @@ public class CustomExceptionNotification extends ExceptionNotificationReporter
 		// initiates exceptions to log
 		try {
 			logExceptionNotificationReport(execptionNotification);
-			
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (InstrumentationException ie) {
+//			ie.printStackTrace();
+			log.error(ie.getMessage(),ie);
 		}
+			
+		
 	}
 }
