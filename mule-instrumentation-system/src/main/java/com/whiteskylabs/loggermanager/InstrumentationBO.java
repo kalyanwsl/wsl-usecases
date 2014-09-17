@@ -16,8 +16,8 @@ public class InstrumentationBO {
 	String timeStamp;
 	String payload;
 	String actionName;
-	String execptionCause;
 	String execptionMessage;
+	String execptionCause;
 	String execptionStackTrace;
 	
 	
@@ -69,14 +69,6 @@ public class InstrumentationBO {
 		this.actionName = actionName;
 	}
 
-	public String getExecptionCause() {
-		return execptionCause;
-	}
-	@XmlElement
-	public void setExecptionCause(String execptionCause) {
-		this.execptionCause = execptionCause;
-	}
-
 	public String getExecptionMessage() {
 		return execptionMessage;
 	}
@@ -84,7 +76,14 @@ public class InstrumentationBO {
 	public void setExecptionMessage(String execptionMessage) {
 		this.execptionMessage = execptionMessage;
 	}
-
+	
+	public String getExecptionCause() {
+		return execptionCause;
+	}
+	@XmlElement
+	public void setExecptionCause(String execptionCause) {
+		this.execptionCause = execptionCause;
+	}
 	public String getExecptionStackTrace() {
 		return execptionStackTrace;
 	}

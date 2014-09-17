@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 import org.apache.log4j.Logger;
 import org.mule.context.notification.ExceptionNotification;
 
+import com.google.common.base.Throwables;
 import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
@@ -20,7 +21,11 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 			.getLogger(ExceptionNotificationReporter.class.getName());
 
 	
-	/** Log Exeception when an Exception is occurred.
+	/** Log Exeception's details when an Exception is occurred.
+	 * Exception details are 
+	 * 1. Exception Message
+	 * 2. Cause of Exception 
+	 * 3. PrintStackTrace 
 	 * @param execNotificationObj Exception Notification object
 	 * @throws JAXBException
 	 * @throws IOException
@@ -33,20 +38,15 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 				.getMessage();
 		Throwable execptionCause = execNotificationObj.getException()
 				.getCause();
-		StackTraceElement[] stackTrace = execNotificationObj.getException()
-				.getStackTrace();
-		String execptionStackTrace = "";
+		String execptionStackTrace = Throwables
+				.getStackTraceAsString(execNotificationObj.getException());
 
 		// Prepare Instrumentation Object with Endpoint notification data.
 		InstrumentationBO instrumentationBO = new InstrumentationBO();
 
-		// Extracting stackTraces into single string
-		for (StackTraceElement stackTraceElement : stackTrace) {
-			execptionStackTrace += stackTraceElement + "\n";
-		}
-
-		instrumentationBO.setExecptionCause(execptionCause.toString());
+		
 		instrumentationBO.setExecptionMessage(execptionMessage);
+		instrumentationBO.setExecptionCause(execptionCause.toString());
 		instrumentationBO.setExecptionStackTrace(execptionStackTrace);
 
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();

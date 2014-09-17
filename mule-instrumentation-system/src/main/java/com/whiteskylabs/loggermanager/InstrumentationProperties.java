@@ -19,21 +19,29 @@ public class InstrumentationProperties {
 	 * @return
 	 * @throws IOException
 	 */
-	public String getPropValue(String key) throws IOException {
+	private static Properties prop;
+	private InputStream inputStream;
+	
+	private void loadProperties() throws IOException  {
+		String propFileName = "Instrumentation.properties";
+		if (prop == null || prop.isEmpty()) {
+			prop = new Properties();
+			inputStream = getClass().getClassLoader().getResourceAsStream(
+					propFileName);
+			prop.load(inputStream);
 
-		Properties prop = new Properties();
-		String propFileName = InstrumentationConstants.INSTRUMENTATION_PROPERTIES_FILE_NAME;
-
-		InputStream inputStream = getClass().getClassLoader()
-				.getResourceAsStream(propFileName);
-		// Load property file
-		prop.load(inputStream);
-
-		if (inputStream == null) {
-			throw new FileNotFoundException("Property file '" + propFileName
-					+ "' not found in the classpath.");
+			if (inputStream == null) {
+				throw new FileNotFoundException("property file '"
+						+ propFileName + "' not found in the classpath");
+			}else
+			{
+				inputStream.close();
+			}
 		}
+	}
 
+	public String getPropValue(String key) throws IOException {
+		loadProperties();
 		return prop.getProperty(key);
 
 	}
