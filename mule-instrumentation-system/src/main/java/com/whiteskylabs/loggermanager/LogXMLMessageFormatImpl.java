@@ -1,5 +1,6 @@
 package com.whiteskylabs.loggermanager;
 
+import java.io.IOException;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
@@ -16,7 +17,7 @@ public class LogXMLMessageFormatImpl implements ILogMessageFormat {
 	@Override
 	public String generateLogMessage(InstrumentationBO instrumentationBO)
 			throws InstrumentationException {
-
+		String xmlMessage = null;
 		try {
 			JAXBContext jaxbContext = JAXBContext
 					.newInstance(InstrumentationBO.class);
@@ -31,9 +32,16 @@ public class LogXMLMessageFormatImpl implements ILogMessageFormat {
 			StringWriter writer = new StringWriter();
 			jaxbMarshaller.marshal(instrumentationBO, writer);
 
-			return writer.toString();
+			xmlMessage = writer.toString();
+			
+			// Close writer object.
+			writer.close();
+			return xmlMessage;
+			
 		} catch (JAXBException jbe) {
 			throw new InstrumentationException(jbe.getMessage(), jbe);
+		} catch (IOException ioe) {
+			throw new InstrumentationException(ioe.getMessage(), ioe);
 		}
 	}
 
