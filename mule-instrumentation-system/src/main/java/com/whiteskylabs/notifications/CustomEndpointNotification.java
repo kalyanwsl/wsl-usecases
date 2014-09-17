@@ -1,11 +1,11 @@
 package com.whiteskylabs.notifications;
 
-import java.io.IOException;
-
+import org.apache.log4j.Logger;
 import org.mule.api.context.notification.EndpointMessageNotificationListener;
 import org.mule.context.notification.EndpointMessageNotification;
 
 import com.whiteskylabs.common.InstrumentationConstants;
+import com.whiteskylabs.exceptions.InstrumentationException;
 import com.whiteskylabs.notificationsreport.EndpointNotificationReporter;
 
 /**
@@ -13,6 +13,9 @@ import com.whiteskylabs.notificationsreport.EndpointNotificationReporter;
  */
 public class CustomEndpointNotification extends EndpointNotificationReporter implements
 		EndpointMessageNotificationListener<EndpointMessageNotification> {
+	
+	private static Logger log = Logger
+			.getLogger(CustomEndpointNotification.class.getName());
 	
 	@Override
 	public void onNotification(EndpointMessageNotification endnotification) {
@@ -24,10 +27,10 @@ public class CustomEndpointNotification extends EndpointNotificationReporter imp
 				logEndpointNotificationReport(endnotification);
 				
 			}
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (InstrumentationException  ie) {
+			
+//			ie.printStackTrace();
+			log.error(ie.getMessage(),ie);
 		}
 	}
 }

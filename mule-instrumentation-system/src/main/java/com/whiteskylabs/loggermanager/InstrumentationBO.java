@@ -1,5 +1,7 @@
 package com.whiteskylabs.loggermanager;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -8,13 +10,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement(name="instrumentation-logger")
-public class InstrumentationBO {
+public class InstrumentationBO implements Serializable{
 
+	/**
+	 * Serializable unique ID.
+	 */
+	private static final long serialVersionUID = 1L;
 	String flowName;
 	String component;
 	String messageID;
 	String timeStamp;
-	String payload;
+	Object payload;
 	String actionName;
 	String execptionMessage;
 	String execptionCause;
@@ -53,11 +59,11 @@ public class InstrumentationBO {
 		this.timeStamp = timeStamp;
 	}
 	
-	public String getPayload() {
+	public Object getPayload() {
 		return payload;
 	}
 	@XmlElement
-	public void setPayload(String payload) {
+	public void setPayload(Object payload) {
 		this.payload = payload;
 	}
 

@@ -1,13 +1,10 @@
 package com.whiteskylabs.notificationsreport;
 
-import java.io.IOException;
-
-import javax.xml.bind.JAXBException;
-
 import org.apache.log4j.Logger;
 import org.mule.context.notification.ExceptionNotification;
 
 import com.google.common.base.Throwables;
+import com.whiteskylabs.exceptions.InstrumentationException;
 import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
@@ -21,19 +18,20 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 			.getLogger(ExceptionNotificationReporter.class.getName());
 
 	
-	/** Log Exeception's details when an Exception is occurred.
+	/**
+	 * Log Exeception's details when an Exception is occurred.
 	 * Exception details are 
 	 * 1. Exception Message
 	 * 2. Cause of Exception 
 	 * 3. PrintStackTrace 
-	 * @param execNotificationObj Exception Notification object
-	 * @throws JAXBException
-	 * @throws IOException
+	 * @param execNotificationObj
+	 *            Exception Notification object
+	 * @throws InstrumentationException
 	 */
 	public void logExceptionNotificationReport(
-			ExceptionNotification execNotificationObj) throws JAXBException,
-			IOException {
+			ExceptionNotification execNotificationObj) throws InstrumentationException {
 
+		System.out.println("$$$$$$$$$$$$$$$$4"+this.getClass().getName()+"$$$$$$$$$$$$4");
 		String execptionMessage = execNotificationObj.getException()
 				.getMessage();
 		Throwable execptionCause = execNotificationObj.getException()
@@ -46,9 +44,11 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 
 		
 		instrumentationBO.setExecptionMessage(execptionMessage);
-		instrumentationBO.setExecptionCause(execptionCause.toString());
+		if(execptionCause != null){
+			instrumentationBO.setExecptionCause(execptionCause.toString());
+		}
 		instrumentationBO.setExecptionStackTrace(execptionStackTrace);
-
+		
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();
 		log.error(instrumentationLoggerFactory.getLogMessage(instrumentationBO));
 
