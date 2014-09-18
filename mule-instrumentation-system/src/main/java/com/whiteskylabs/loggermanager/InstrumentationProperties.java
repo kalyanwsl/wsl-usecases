@@ -17,32 +17,37 @@ public class InstrumentationProperties {
 	 * 
 	 * @param key
 	 * @return
-	 * @throws InstrumentationException 
+	 * @throws InstrumentationException
 	 */
-	public String getPropValue(String key) throws InstrumentationException   {
-		String value = null;
+
+	private static Properties prop;
+	private InputStream inputStream;
+
+	private void loadProperties() throws InstrumentationException {
+
 		try {
-			Properties prop = new Properties();
-			String propFileName = InstrumentationConstants.INSTRUMENTATION_PROPERTIES_FILE_NAME;
-			
+			String propFileName =InstrumentationConstants.INSTRUMENTATION_PROPERTIES_FILE_NAME;
+			if (prop == null || prop.isEmpty()) {
+				prop = new Properties();
+				inputStream = getClass().getClassLoader().getResourceAsStream(
+						propFileName);
+				prop.load(inputStream);
 
-			InputStream inputStream = getClass().getClassLoader()
-					.getResourceAsStream(propFileName);
-			// Load property file
-			prop.load(inputStream);
-
-			if (inputStream == null) {
-				throw new InstrumentationException("Property file '"
-						+ propFileName + "' not found in the classpath.");
+				if (inputStream == null) {
+					throw new InstrumentationException("Property file '"
+							+ propFileName + "' not found in the classpath.");
+				} else {
+					inputStream.close();
+				}
 			}
-
-			value = prop.getProperty(key);
-			inputStream.close();
 		} catch (IOException ioe) {
 			throw new InstrumentationException(ioe.getMessage(), ioe);
 		}
-		return value;
+	}
 
+	public String getPropValue(String key) throws InstrumentationException {
+		loadProperties();
+		return prop.getProperty(key);
 	}
 
 }

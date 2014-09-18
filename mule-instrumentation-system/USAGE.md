@@ -25,17 +25,13 @@ Following steps need to be take care while adding the mule instrumentation utili
 				 <dependency>
 			   		<groupId>com.google.code.gson</groupId>
    					<artifactId>gson</artifactId>
-   					<version>2.2.4</version>
+   					<version>2.3</version>
   				 </dependency>
 
 
 2. Download the mule instrumentation utility jar located at the location <Git Hub Location>
 
-3. Configure the jar to build path of the mule project. 
-	
-	a) Right click on the project, go to build path and select configure build paht option. 
-  	
-	b) Click on add external jar files and point to the mule instrumentation jar.
+3. Configure the downloaded mule-instrumentation-utility-jar to build path of mule project. 
 
 4. Create a log4j.properties file under src/main/resources of mule project and add the below content to it.
 			

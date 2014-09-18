@@ -52,8 +52,7 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 		if (Boolean
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
 			try {
-				String payload = endnotification.getSource()
-						.getPayloadAsString();
+				Object payload = endnotification.getSource().getPayload();
 				instrumentationBO.setPayload(payload);
 			} catch (Exception e) {
 				throw new InstrumentationException(e.getMessage(), e);
