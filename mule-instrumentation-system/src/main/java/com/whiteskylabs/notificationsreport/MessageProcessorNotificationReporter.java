@@ -51,7 +51,10 @@ public class MessageProcessorNotificationReporter extends
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
 				Object payload = mpnotification.getSource().getMessage()
 						.getPayload();
-				instrumentationBO.setPayload(payload.toString());
+				if(payload instanceof String)
+				{
+					instrumentationBO.setPayload(payload.toString());
+				}
 		}
 
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();

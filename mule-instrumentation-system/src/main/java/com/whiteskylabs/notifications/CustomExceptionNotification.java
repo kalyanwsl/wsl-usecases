@@ -26,7 +26,6 @@ public class CustomExceptionNotification extends ExceptionNotificationReporter
 
 		// initiates exceptions to log
 		try {
-			System.out.println("############"+this.getClass().getName()+"#############");
 			logExceptionNotificationReport(execptionNotification);
 		} catch (InstrumentationException ie) {
 			log.error(ie.getMessage(),ie);
