@@ -53,7 +53,6 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
 			Object payload = endnotification.getSource().getPayload();
 			instrumentationBO.setPayload(payload.toString());
-
 		}
 
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();

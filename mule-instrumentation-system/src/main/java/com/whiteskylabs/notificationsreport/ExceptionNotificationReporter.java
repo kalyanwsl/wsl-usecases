@@ -3,7 +3,6 @@ package com.whiteskylabs.notificationsreport;
 import org.apache.log4j.Logger;
 import org.mule.context.notification.ExceptionNotification;
 
-import com.google.common.base.Throwables;
 import com.whiteskylabs.exceptions.InstrumentationException;
 import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
@@ -19,11 +18,8 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 
 	
 	/**
-	 * Log Exeception's details when an Exception is occurred.
-	 * Exception details are 
-	 * 1. Exception Message
-	 * 2. Cause of Exception 
-	 * 3. PrintStackTrace 
+	 * Log Exeception when an Exception is occurred.
+	 * 
 	 * @param execNotificationObj
 	 *            Exception Notification object
 	 * @throws InstrumentationException
@@ -31,24 +27,26 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 	public void logExceptionNotificationReport(
 			ExceptionNotification execNotificationObj) throws InstrumentationException {
 
-		System.out.println("$$$$$$$$$$$$$$$$4"+this.getClass().getName()+"$$$$$$$$$$$$4");
 		String execptionMessage = execNotificationObj.getException()
 				.getMessage();
 		Throwable execptionCause = execNotificationObj.getException()
 				.getCause();
-		String execptionStackTrace = Throwables
-				.getStackTraceAsString(execNotificationObj.getException());
+		StackTraceElement[] stackTrace = execNotificationObj.getException()
+				.getStackTrace();
+		String execptionStackTrace = "";
 
 		// Prepare Instrumentation Object with Endpoint notification data.
 		InstrumentationBO instrumentationBO = new InstrumentationBO();
 
-		
-		instrumentationBO.setExecptionMessage(execptionMessage);
-		if(execptionCause != null){
-			instrumentationBO.setExecptionCause(execptionCause.toString());
+		// Extracting stackTraces into single string
+		for (StackTraceElement stackTraceElement : stackTrace) {
+			execptionStackTrace += stackTraceElement + "\n";
 		}
+
+		instrumentationBO.setExecptionCause(execptionCause.toString());
+		instrumentationBO.setExecptionMessage(execptionMessage);
 		instrumentationBO.setExecptionStackTrace(execptionStackTrace);
-		
+
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();
 		log.error(instrumentationLoggerFactory.getLogMessage(instrumentationBO));
 
