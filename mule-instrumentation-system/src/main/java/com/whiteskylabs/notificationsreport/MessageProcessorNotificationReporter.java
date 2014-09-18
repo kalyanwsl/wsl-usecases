@@ -49,13 +49,9 @@ public class MessageProcessorNotificationReporter extends
 		// Set payload to instrumentaion object if payload flag is enabled.
 		if (Boolean
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
-			try {
-				String payload = mpnotification.getSource().getMessage()
-						.getPayloadAsString();
-				instrumentationBO.setPayload(payload);
-			} catch (Exception e) {
-				throw new InstrumentationException(e.getMessage(), e);
-			}
+				Object payload = mpnotification.getSource().getMessage()
+						.getPayload();
+				instrumentationBO.setPayload(payload.toString());
 		}
 
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();
