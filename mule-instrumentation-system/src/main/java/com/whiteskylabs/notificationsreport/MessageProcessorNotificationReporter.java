@@ -59,6 +59,7 @@ public class MessageProcessorNotificationReporter extends
 		// Log pre invoke and post invoke data of Message Processor at DEBUG level 
 		if (log.isDebugEnabled()) { 
 			log.debug(instrumentationLoggerFactory.getLogMessage(instrumentationBO));
+			
 		} 
 		// Log only pre invoke data of Message Processor at INFO level
 		else if (log.isInfoEnabled()

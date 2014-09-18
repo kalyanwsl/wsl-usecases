@@ -28,8 +28,6 @@ public class CustomEndpointNotification extends EndpointNotificationReporter imp
 				
 			}
 		} catch (InstrumentationException  ie) {
-			
-//			ie.printStackTrace();
 			log.error(ie.getMessage(),ie);
 		}
 	}

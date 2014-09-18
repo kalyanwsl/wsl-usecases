@@ -1,12 +1,14 @@
 package com.whiteskylabs.loggermanager;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import com.sun.xml.internal.bind.marshaller.DataWriter;
 import com.whiteskylabs.exceptions.InstrumentationException;
 
 /**
@@ -29,13 +31,22 @@ public class LogXMLMessageFormatImpl implements ILogMessageFormat {
 			// Make XML pretty format.
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
 					Boolean.TRUE);
-			StringWriter writer = new StringWriter();
-			jaxbMarshaller.marshal(instrumentationBO, writer);
+			jaxbMarshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+			
+			//Avoid the conversion of < to &lt; and > to &gt; etc
+			StringWriter stringWriter = new StringWriter();
+			PrintWriter printWriter = new PrintWriter(stringWriter);
+			DataWriter dataWriter = new DataWriter(printWriter, "UTF-8", new JaxbCharacterEscapeHandler());
+			 
+			// Perform Marshaling operation
+			jaxbMarshaller.marshal(instrumentationBO, dataWriter);
 
-			xmlMessage = writer.toString();
+			xmlMessage = stringWriter.toString();
 			
 			// Close writer object.
-			writer.close();
+			stringWriter.close();
+			printWriter.close();
+			
 			return xmlMessage;
 			
 		} catch (JAXBException jbe) {

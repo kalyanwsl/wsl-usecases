@@ -35,7 +35,6 @@ public class CustomMessageProcessorNotification extends
 
 			}
 		} catch (InstrumentationException ie) {
-//			ie.printStackTrace();
 			log.error(ie.getMessage(),ie);
 		}
 	}

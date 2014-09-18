@@ -31,7 +31,6 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 	public void logExceptionNotificationReport(
 			ExceptionNotification execNotificationObj) throws InstrumentationException {
 
-		System.out.println("$$$$$$$$$$$$$$$$4"+this.getClass().getName()+"$$$$$$$$$$$$4");
 		String execptionMessage = execNotificationObj.getException()
 				.getMessage();
 		Throwable execptionCause = execNotificationObj.getException()
@@ -45,6 +44,7 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 		
 		instrumentationBO.setExecptionMessage(execptionMessage);
 		if(execptionCause != null){
+			System.out.println("systemEXCEPTIION::::::::::");
 			instrumentationBO.setExecptionCause(execptionCause.toString());
 		}
 		instrumentationBO.setExecptionStackTrace(execptionStackTrace);
