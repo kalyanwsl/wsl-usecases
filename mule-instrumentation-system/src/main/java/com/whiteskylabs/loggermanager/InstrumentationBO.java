@@ -20,10 +20,10 @@ public class InstrumentationBO implements Serializable{
 	String component;
 	String messageID;
 	String timeStamp;
-	String payload;
+	Object payload;
 	String actionName;
-	String execptionCause;
 	String execptionMessage;
+	String execptionCause;
 	String execptionStackTrace;
 	
 	
@@ -59,11 +59,11 @@ public class InstrumentationBO implements Serializable{
 		this.timeStamp = timeStamp;
 	}
 	
-	public String getPayload() {
+	public Object getPayload() {
 		return payload;
 	}
 	@XmlElement
-	public void setPayload(String payload) {
+	public void setPayload(Object payload) {
 		this.payload = payload;
 	}
 
@@ -75,14 +75,6 @@ public class InstrumentationBO implements Serializable{
 		this.actionName = actionName;
 	}
 
-	public String getExecptionCause() {
-		return execptionCause;
-	}
-	@XmlElement
-	public void setExecptionCause(String execptionCause) {
-		this.execptionCause = execptionCause;
-	}
-
 	public String getExecptionMessage() {
 		return execptionMessage;
 	}
@@ -90,7 +82,14 @@ public class InstrumentationBO implements Serializable{
 	public void setExecptionMessage(String execptionMessage) {
 		this.execptionMessage = execptionMessage;
 	}
-
+	
+	public String getExecptionCause() {
+		return execptionCause;
+	}
+	@XmlElement
+	public void setExecptionCause(String execptionCause) {
+		this.execptionCause = execptionCause;
+	}
 	public String getExecptionStackTrace() {
 		return execptionStackTrace;
 	}
