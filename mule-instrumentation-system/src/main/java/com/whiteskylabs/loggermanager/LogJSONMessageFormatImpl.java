@@ -1,5 +1,7 @@
 package com.whiteskylabs.loggermanager;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,8 +23,7 @@ public class LogJSONMessageFormatImpl implements ILogMessageFormat {
 		//  Convert Object to Json
 		String json = gson.toJson(instrumentationBO);
 
-		
-		return json;
+		return StringEscapeUtils.unescapeJavaScript(json);
 	}
 
 }

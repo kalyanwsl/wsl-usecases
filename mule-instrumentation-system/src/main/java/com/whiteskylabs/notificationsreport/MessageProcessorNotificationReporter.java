@@ -45,11 +45,11 @@ public class MessageProcessorNotificationReporter extends
 		// data.
 		InstrumentationBO instrumentationBO = new InstrumentationBO();
 
-		instrumentationBO.setComponent(messageProcessorName);
-		instrumentationBO.setFlowName(flowName);
-		instrumentationBO.setTimeStamp(timeStamp.toString());
 		instrumentationBO.setMessageID(messageID);
+		instrumentationBO.setFlowName(flowName);
+		instrumentationBO.setComponent(messageProcessorName);
 		instrumentationBO.setActionName(actionName);
+		instrumentationBO.setTimeStamp(timeStamp.toString());
 
 		// Set payload to instrumentaion object if payload flag is enabled.
 		if (Boolean

@@ -42,11 +42,11 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 		// Prepare Instrumentation Object with Endpoint notification data.
 		InstrumentationBO instrumentationBO = new InstrumentationBO();
 
-		instrumentationBO.setComponent(endpointClassName);
-		instrumentationBO.setFlowName(flowName);
-		instrumentationBO.setTimeStamp(timeStamp.toString());
 		instrumentationBO.setMessageID(messageID);
+		instrumentationBO.setFlowName(flowName);
+		instrumentationBO.setComponent(endpointClassName);
 		instrumentationBO.setActionName(actionName);
+		instrumentationBO.setTimeStamp(timeStamp.toString());
 
 		// Set payload to instrumentation object if payload flag is enabled.
 		if (Boolean
