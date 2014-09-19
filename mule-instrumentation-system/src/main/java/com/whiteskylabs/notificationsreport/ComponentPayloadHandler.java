@@ -1,5 +1,7 @@
 package com.whiteskylabs.notificationsreport;
 
+import java.util.Map;
+
 /**
  * This class is used to get component's payload.
  */
@@ -14,7 +16,7 @@ public class ComponentPayloadHandler {
 	public String getComponentPayload(Object payload) {
 
 		// if Payload is a type of String, return it.
-		if (payload instanceof String) {
+		if (payload instanceof String || payload instanceof Map<?, ?>) {
 			return payload.toString();
 		}
 		// If Payload is a type of Byte[], convert it into String and return.
