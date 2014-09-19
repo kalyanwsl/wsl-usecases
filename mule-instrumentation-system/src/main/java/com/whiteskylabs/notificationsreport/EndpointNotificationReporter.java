@@ -7,6 +7,7 @@ import org.mule.context.notification.EndpointMessageNotification;
 
 import com.whiteskylabs.common.InstrumentationConstants;
 import com.whiteskylabs.exceptions.InstrumentationException;
+import com.whiteskylabs.loggermanager.ComponentPayloadHandler;
 import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;

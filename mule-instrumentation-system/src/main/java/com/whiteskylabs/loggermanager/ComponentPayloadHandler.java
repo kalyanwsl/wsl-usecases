@@ -1,4 +1,4 @@
-package com.whiteskylabs.notificationsreport;
+package com.whiteskylabs.loggermanager;
 
 import java.util.List;
 import java.util.Map;
