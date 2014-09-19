@@ -44,7 +44,6 @@ public class ExceptionNotificationReporter extends InstrumentationProperties {
 		
 		instrumentationBO.setExecptionMessage(execptionMessage);
 		if(execptionCause != null){
-			System.out.println("systemEXCEPTIION::::::::::");
 			instrumentationBO.setExecptionCause(execptionCause.toString());
 		}
 		instrumentationBO.setExecptionStackTrace(execptionStackTrace);
