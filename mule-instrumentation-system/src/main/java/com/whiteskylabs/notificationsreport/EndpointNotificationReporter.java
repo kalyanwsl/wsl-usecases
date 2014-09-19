@@ -51,11 +51,14 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 		// Set payload to instrumentation object if payload flag is enabled.
 		if (Boolean
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
-			Object payload = endnotification.getSource().getPayload();
-			if(payload instanceof String)
-			{
-				instrumentationBO.setPayload(payload.toString());
-			}
+
+			ComponentPayloadHandler componentPayloadHandler = new ComponentPayloadHandler();
+
+			// Get Endpoint component payload.
+			String payload = componentPayloadHandler
+					.getComponentPayload(endnotification.getSource()
+							.getPayload());
+			instrumentationBO.setPayload(payload);
 		}
 
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();

@@ -12,7 +12,7 @@ import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
 
 /**
- *	Log component data when Message Processor is invoked. 
+ * Log component data when Message Processor is invoked.
  */
 public class MessageProcessorNotificationReporter extends
 		InstrumentationProperties {
@@ -20,12 +20,16 @@ public class MessageProcessorNotificationReporter extends
 	private static Logger log = Logger
 			.getLogger(MessageProcessorNotificationReporter.class.getName());
 
-	/** Log Message Processor data when a message processor is invoked
-	 * @param mpnotification Message Processor notification  object
-	 * @throws InstrumentationException 
+	/**
+	 * Log Message Processor data when a message processor is invoked
+	 * 
+	 * @param mpnotification
+	 *            Message Processor notification object
+	 * @throws InstrumentationException
 	 */
 	public void logMessageProcessorReport(
-			MessageProcessorNotification mpnotification) throws InstrumentationException {
+			MessageProcessorNotification mpnotification)
+			throws InstrumentationException {
 
 		// Get Message Processor details.
 		String messageProcessorName = mpnotification.getProcessor().getClass()
@@ -36,8 +40,9 @@ public class MessageProcessorNotificationReporter extends
 		String messageID = mpnotification.getSource().getMessage()
 				.getUniqueId();
 		String actionName = mpnotification.getActionName();
-		
-		//Prepare Instrumentation Object with Message Processor notification data.
+
+		// Prepare Instrumentation Object with Message Processor notification
+		// data.
 		InstrumentationBO instrumentationBO = new InstrumentationBO();
 
 		instrumentationBO.setComponent(messageProcessorName);
@@ -45,31 +50,37 @@ public class MessageProcessorNotificationReporter extends
 		instrumentationBO.setTimeStamp(timeStamp.toString());
 		instrumentationBO.setMessageID(messageID);
 		instrumentationBO.setActionName(actionName);
-		
+
 		// Set payload to instrumentaion object if payload flag is enabled.
 		if (Boolean
 				.parseBoolean(getPropValue(InstrumentationConstants.IS_PAYLOAD_LOGGING_ENABLED))) {
-				Object payload = mpnotification.getSource().getMessage()
-						.getPayload();
-				if(payload instanceof String)
-				{
-					instrumentationBO.setPayload(payload.toString());
-				}
+
+			ComponentPayloadHandler componentPayloadHandler = new ComponentPayloadHandler();
+			
+			// Get Message Processor payload.
+			String payload = componentPayloadHandler.getComponentPayload(mpnotification
+					.getSource().getMessage().getPayload());
+			instrumentationBO.setPayload(payload);
+
 		}
 
 		InstrumentationLoggerFactory instrumentationLoggerFactory = new InstrumentationLoggerFactory();
 
-		// Log pre invoke and post invoke data of Message Processor at DEBUG level 
-		if (log.isDebugEnabled()) { 
-			log.debug(instrumentationLoggerFactory.getLogMessage(instrumentationBO));
-			
-		} 
+		// Log pre invoke and post invoke data of Message Processor at DEBUG
+		// level
+		if (log.isDebugEnabled()) {
+			log.debug(instrumentationLoggerFactory
+					.getLogMessage(instrumentationBO));
+
+		}
 		// Log only pre invoke data of Message Processor at INFO level
 		else if (log.isInfoEnabled()
-				&& mpnotification.getActionName().equals(
-						InstrumentationConstants.IS_MESSAGE_PROCESSOR_PRE_INVOKE)) {
-			log.info(instrumentationLoggerFactory.getLogMessage(instrumentationBO));
-			
+				&& mpnotification
+						.getActionName()
+						.equals(InstrumentationConstants.IS_MESSAGE_PROCESSOR_PRE_INVOKE)) {
+			log.info(instrumentationLoggerFactory
+					.getLogMessage(instrumentationBO));
+
 		}
 
 	}
