@@ -5,9 +5,9 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.mule.context.notification.EndpointMessageNotification;
 
+import com.whiteskylabs.common.ComponentPayloadHandler;
 import com.whiteskylabs.common.InstrumentationConstants;
 import com.whiteskylabs.exceptions.InstrumentationException;
-import com.whiteskylabs.loggermanager.ComponentPayloadHandler;
 import com.whiteskylabs.loggermanager.InstrumentationBO;
 import com.whiteskylabs.loggermanager.InstrumentationLoggerFactory;
 import com.whiteskylabs.loggermanager.InstrumentationProperties;
@@ -43,11 +43,11 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 		// Prepare Instrumentation Object with Endpoint notification data.
 		InstrumentationBO instrumentationBO = new InstrumentationBO();
 
-		instrumentationBO.setComponent(endpointClassName);
-		instrumentationBO.setFlowName(flowName);
-		instrumentationBO.setTimeStamp(timeStamp.toString());
 		instrumentationBO.setMessageID(messageID);
+		instrumentationBO.setFlowName(flowName);
+		instrumentationBO.setComponent(endpointClassName);
 		instrumentationBO.setActionName(actionName);
+		instrumentationBO.setTimeStamp(timeStamp.toString());
 
 		// Set payload to instrumentation object if payload flag is enabled.
 		if (Boolean

@@ -1,4 +1,4 @@
-package com.whiteskylabs.loggermanager;
+package com.whiteskylabs.common;
 
 import java.util.List;
 import java.util.Map;
