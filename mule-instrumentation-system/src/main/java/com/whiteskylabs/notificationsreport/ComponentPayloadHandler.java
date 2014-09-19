@@ -1,5 +1,6 @@
 package com.whiteskylabs.notificationsreport;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,8 +16,8 @@ public class ComponentPayloadHandler {
 	 */
 	public String getComponentPayload(Object payload) {
 
-		// if Payload is a type of String, return it.
-		if (payload instanceof String || payload instanceof Map<?, ?>) {
+		// if Payload is a type of String, Map or List return it.
+		if (payload instanceof String || payload instanceof Map<?, ?> || payload instanceof List<?>) {
 			return payload.toString();
 		}
 		// If Payload is a type of Byte[], convert it into String and return.
