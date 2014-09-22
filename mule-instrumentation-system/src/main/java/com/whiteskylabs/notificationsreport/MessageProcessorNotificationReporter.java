@@ -59,7 +59,7 @@ public class MessageProcessorNotificationReporter extends
 			ComponentPayloadHandler componentPayloadHandler = new ComponentPayloadHandler();
 			
 			// Get Message Processor payload.
-			String payload = componentPayloadHandler.getComponentPayload(mpnotification
+			String payload = componentPayloadHandler.getComponentPayloadAsString(mpnotification
 					.getSource().getMessage().getPayload());
 			instrumentationBO.setPayload(payload);
 
