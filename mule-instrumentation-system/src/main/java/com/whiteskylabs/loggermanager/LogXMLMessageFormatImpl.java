@@ -35,17 +35,16 @@ public class LogXMLMessageFormatImpl implements ILogMessageFormat {
 			
 			//Avoid the conversion of < to &lt; and > to &gt; etc
 			StringWriter stringWriter = new StringWriter();
-			PrintWriter printWriter = new PrintWriter(stringWriter);
-			DataWriter dataWriter = new DataWriter(printWriter, "UTF-8", new JaxbCharacterEscapeHandler());
+			/*PrintWriter printWriter = new PrintWriter(stringWriter);
+			DataWriter dataWriter = new DataWriter(printWriter, "UTF-8", new JaxbCharacterEscapeHandler());*/
 			 
 			// Perform Marshaling operation
-			jaxbMarshaller.marshal(instrumentationBO, dataWriter);
+			jaxbMarshaller.marshal(instrumentationBO, stringWriter);
 
 			xmlMessage = stringWriter.toString();
 			
 			// Close writer object.
 			stringWriter.close();
-			printWriter.close();
 			
 			return xmlMessage;
 			
