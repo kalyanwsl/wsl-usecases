@@ -57,7 +57,7 @@ public class EndpointNotificationReporter extends InstrumentationProperties {
 
 			// Get Endpoint component payload.
 			String payload = componentPayloadHandler
-					.getComponentPayload(endnotification.getSource()
+					.getComponentPayloadAsString(endnotification.getSource()
 							.getPayload());
 			instrumentationBO.setPayload(payload);
 		}
