@@ -22,7 +22,9 @@ public class LogJSONMessageFormatImpl implements ILogMessageFormat {
 
 		//  Convert Object to Json
 		String json = gson.toJson(instrumentationBO);
-
+		
+		// prepending  a space before '}' for the purpose of logstash 'multiline' filter.
+		json=json.replaceAll("}","  }" );
 		return StringEscapeUtils.unescapeJavaScript(json);
 	}
 

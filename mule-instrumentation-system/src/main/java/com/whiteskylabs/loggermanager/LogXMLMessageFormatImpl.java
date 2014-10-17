@@ -41,6 +41,9 @@ public class LogXMLMessageFormatImpl implements ILogMessageFormat {
 			//Avoid the conversion of < to &lt; and > to &gt; etc
 			xmlMessage = StringEscapeUtils.unescapeHtml(stringWriter.toString());
 			
+			// prepending  a space before '</instrumentation-logger>' for the purpose of logstash 'multiline' filter.
+			xmlMessage=xmlMessage.replaceAll("</instrumentation-logger>", "  </instrumentation-logger>");
+			
 			// Close writer object.
 			stringWriter.close();
 			
