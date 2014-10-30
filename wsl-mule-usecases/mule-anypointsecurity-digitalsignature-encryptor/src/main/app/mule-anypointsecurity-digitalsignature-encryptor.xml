@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:encryption="http://www.mulesoft.org/schema/mule/encryption" xmlns:signature="http://www.mulesoft.org/schema/mule/signature" xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper" xmlns:jdbc-ee="http://www.mulesoft.org/schema/mule/ee/jdbc" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.5.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/jdbc http://www.mulesoft.org/schema/mule/ee/jdbc/current/mule-jdbc-ee.xsd
+http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
+http://www.mulesoft.org/schema/mule/signature http://www.mulesoft.org/schema/mule/signature/1.2/mule-signature.xsd
+http://www.mulesoft.org/schema/mule/encryption http://www.mulesoft.org/schema/mule/encryption/1.2/mule-encryption.xsd">
+
+
+<!-- <spring:beans>
+        <spring:bean id="jdbcDataSource" class="org.apache.commons.dbcp.BasicDataSource" name="jdbcDataSource">
+            <spring:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+            <spring:property name="url" value="jdbc:oracle:thin:@//localhost:1521/XE"/>
+            <spring:property name="username" value="system"/>
+            <spring:property name="password" value="wsl"/>
+            <spring:property name="initialSize" value="10"/>
+            <spring:property name="maxActive" value="100"/>
+            <spring:property name="maxIdle" value="10"/>
+        </spring:bean>
+</spring:beans>
+
+  <jdbc-ee:connector   name="Database" dataSource-ref="jdbcDataSource" validateConnections="true" queryTimeout="-1" pollingFrequency="0" doc:name="Database">
+</jdbc-ee:connector> -->
+    <db:generic-config name="Generic_Database_Configuration" url="jdbc:oracle:thin:system/wsl@//localhost:1521/XE" driverClassName="oracle.jdbc.driver.OracleDriver" doc:name="Generic Database Configuration">
+       
+    </db:generic-config>
+    <signature:config name="Signature" doc:name="Signature">
+        <signature:jce-signer-config algorithm="HmacMD5" key="whiteskylabs1234"/>
+    </signature:config>
+    <encryption:config name="Encryption" doc:name="Encryption">
+        <encryption:jce-encrypter-config key="whiteskylabs1234" algorithm="Blowfish"/>
+    </encryption:config>
+ <flow name="benckmark-webservice" doc:name="benckmark-webservice">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="soapws" doc:name="http"  />
+        <cxf:jaxws-service doc:name="soap" serviceClass="com.wsl.ws.FetchDBData"/>
+        <db:select config-ref="Generic_Database_Configuration" doc:name="select-user-details">
+            <db:parameterized-query><![CDATA[select NAME,AGE,EMP_ID from SYSTEM.USER_DATA where id=#[message.payload]]]></db:parameterized-query>
+        </db:select>
+        <logger message="dbmap payload..............................#[payload]" level="INFO" doc:name="logger-db-output"/>
+        <json:object-to-json-transformer doc:name="object-to-json"/>
+        <encryption:encrypt config-ref="Encryption" doc:name="jce-encryptor-encrypt"/>
+        <signature:sign config-ref="Signature" doc:name="jce-signature-sign" variable="dsign"/>
+        <logger message="last.................#[payload]......#[dsign]" level="INFO" doc:name="log-ouput-signature-encrypt"/>
+        <message-properties-transformer doc:name="set-signature-message-properties">
+            <add-message-property key="signature" value="#[dsign]"/>
+        </message-properties-transformer>
+        <http:outbound-endpoint exchange-pattern="one-way" host="localhost" port="8083" path="consumer" method="POST" doc:name="http"/>
+      <!--   <logger message="...................................#[message.payload]" level="INFO" doc:name="Logger"/> -->
+        
+    </flow>
+    <flow name="mule-anypointsecurity-digitalsignature-encryptorFlow1" doc:name="mule-anypointsecurity-digitalsignature-encryptorFlow1">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8083" path="consumer" doc:name="http"/>
+        <object-to-string-transformer doc:name="object-to-string"/>
+        <logger message="secondflow-start::::::::::::::::::::::::::::#[payload.toString()]............#[message.inboundProperties['signature']]" level="INFO" doc:name="log-encrypt-msg"/>
+       <!--  <signature:verify-signature config-ref="Signature" expectedSignature="#[message.inboundProperties['signature']]" doc:name="signature-verify"/> -->
+       <signature:verify-signature config-ref="Signature" expectedSignature="/VEXgOS6VBGlUu7twRxWfA==" doc:name="jce-signature-verify"/> 
+       
+        <encryption:decrypt config-ref="Encryption" doc:name="jce-decryption"/>
+        <logger message="secondflow-end...........................#[payload]" level="INFO" doc:name="logger"/>
+    </flow>
+    <!-- <flow name="mule-anypointsecurity-digitalsignature-encryptorFlow1" doc:name="mule-anypointsecurity-digitalsignature-encryptorFlow1">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" doc:name="HTTP"/>
+        <set-payload doc:name="Set Payload"/>
+        <smtp:outbound-endpoint host="localhost" responseTimeout="10000" doc:name="SMTP"/>
+    </flow> -->
+</mule>
