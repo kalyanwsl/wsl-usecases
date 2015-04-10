@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
+
+	<http:listener-config name="HTTP_Listener_Configuration"
+		host="localhost" port="8082" doc:name="HTTP Listener Configuration" />
+	
+	
+	
+	 <jms:connector name="hornetq-connector" username="guest" password="guest"
+        specification="1.1" connectionFactory-ref="connectionFactory" doc:name="JMS"/>
+    <spring:beans>
+        <spring:bean name="connectionFactory" class="org.hornetq.jms.client.HornetQJMSConnectionFactory">
+            <spring:constructor-arg index="0" value="false"/>
+            <spring:constructor-arg index="1">
+                <spring:bean class="org.hornetq.api.core.TransportConfiguration">
+                    <spring:constructor-arg value="org.hornetq.core.remoting.impl.netty.NettyConnectorFactory"/>
+                    <spring:constructor-arg>
+                        <spring:map value-type="java.lang.Object" key-type="java.lang.String">
+                            <spring:entry key="host" value="127.0.0.1"/>
+                            <spring:entry key="port" value="5445"/>
+                        </spring:map>
+                    </spring:constructor-arg>
+                </spring:bean>
+            </spring:constructor-arg>
+        </spring:bean>
+    </spring:beans>
+ 
+	
+	<flow name="samepl-jms-versions-testFlow">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/jms" doc:name="HTTP" />
+        <set-payload value="Hello from #[message.inboundProperties.'http.query.params'.name]" doc:name="Set Payload"/>
+        <logger message="Sender flow Payload is : :::::::::::::#[payload]:::::::::::::::::::::" level="INFO" doc:name="Logger"/>
+		<jms:outbound-endpoint queue="DLQ"
+			doc:name="JMS" connector-ref="hornetq-connector"/>
+	</flow>
+    <flow name="samepl-jms-versions-testFlow1">
+        <jms:inbound-endpoint queue="DLQ" connector-ref="hornetq-connector" doc:name="JMS"/>
+        <logger message="Reveiver flow Payload is : :::::::::::::#[payload]:::::::::::::::::::::" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

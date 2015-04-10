@@ -1,0 +1,2 @@
+One needs to make HornetQ server up and running.. and then use this application.
+bin/run.bat
