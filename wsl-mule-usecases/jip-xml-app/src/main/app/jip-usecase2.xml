@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+	xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns:data-mapper="http://www.mulesoft.org/schema/mule/ee/data-mapper"
+	xmlns:jdbc-ee="http://www.mulesoft.org/schema/mule/ee/jdbc" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.4.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/jdbc http://www.mulesoft.org/schema/mule/ee/jdbc/current/mule-jdbc-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd">
+	 <spring:beans>
+        <spring:bean id="bean-xadatasource-ref" name="bean-xadatasource-ref" class="oracle.jdbc.xa.client.OracleXADataSource">
+            <spring:property name="password" value="wsldb"/>
+            <spring:property name="URL" value="jdbc:oracle:thin:@//localhost:1521/xe"/>
+            <spring:property name="user" value="wsldb"/>
+        </spring:bean>
+    </spring:beans>
+	<jdbc-ee:connector name="oracle-db-connector"
+		dataSource-ref="oracle-data-source" validateConnections="true"
+		queryTimeout="-1" pollingFrequency="0" doc:name="DatabaseConnector">
+		<reconnect-forever frequency="20000"  />
+	</jdbc-ee:connector>
+	
+	
+	<jdbc-ee:oracle-data-source name="oracle-data-source"
+		user="wsldb" password="wsldb" url="jdbc:oracle:thin:@//localhost:1521/xe"
+		transactionIsolation="UNSPECIFIED" doc:name="Oracle Data Source" />
+	<jdbc-ee:connector name="oracle-db-connector-pool"
+		dataSource-ref="bean-xadatasource-ref" validateConnections="true"
+		queryTimeout="-1" pollingFrequency="0" doc:name="DatabaseConnector">
+		<reconnect-forever frequency="20000"  />
+	</jdbc-ee:connector>
+	
+	
+	<context:property-placeholder location="SampleXML.xml" />
+	<data-mapper:config name="xml_to_map"
+		transformationGraphPath="xml_to_map.grf" doc:name="xml_to_map" />
+	<!-- <context:property-placeholder location="complexSampleXML.xml"/> -->
+	<!-- <data-mapper:config name="xml_to_map" transformationGraphPath="xml_to_map.grf" 
+		doc:name="xml_to_map"/> -->
+	<flow name="jip-usecase2" doc:name="jip-usecase2">
+		<http:inbound-endpoint exchange-pattern="request-response"
+			host="localhost" port="8081" doc:name="invoke-jip-usecase2" path="jipusecase2"
+			contentType="text/plain" mimeType="text/plain" />
+		<expression-filter expression="#[payload !='/favicon.ico']"
+			doc:name="expression" />
+		<set-payload
+			value="#[Thread.currentThread().getContextClassLoader().getResourceAsStream('SampleXML.xml')]"
+			doc:name="xml-from-file" />
+		<data-mapper:transform config-ref="xml_to_map"
+			doc:name="map-to-xml" />
+		<component class="com.whiteskylabs.jip.PauseTenSec"
+			doc:name="pause-ten-sec" />
+
+		<message-properties-transformer
+			doc:name="capture-variable">
+			<add-message-property key="variable1"
+				value="#[payload.get('from')+' '+payload.get('to')]" />
+			<add-message-property key="variable2"
+				value="#[payload.get('body') +' ' + payload.get('sample')]" />
+			<add-message-property key="counter"
+				value="#[message.inboundProperties['insertCount'] == null ? 1: message.inboundProperties['insertCount']]" />
+		</message-properties-transformer>
+		<component class="com.whiteskylabs.jip.util.CreateCollection"
+			doc:name="prepare-collection" />
+        <logger message="invoking db with #[payload]." level="INFO"
+			doc:name="log" />
+		<foreach doc:name="for-each-item" counterVariableName="count">
+			<logger message="For loop count: #[count]" level="INFO"
+				doc:name="log-loop-count" />
+			<jdbc-ee:outbound-endpoint
+				exchange-pattern="one-way" queryKey="insert-record" queryTimeout="-1"
+				connector-ref="oracle-db-connector" doc:name="create-record">
+				<jdbc-ee:query key="insert-record"
+					value="insert into table1 values(#[message.outboundProperties['variable1']],#[message.outboundProperties['variable2']])" />
+			</jdbc-ee:outbound-endpoint>
+		</foreach>
+		<mulexml:object-to-xml-transformer
+			doc:name="Object to XML" />
+		<component class="com.whiteskylabs.jip.PauseTenSec"
+			doc:name="pause-ten-sec" />
+		<component class="com.whiteskylabs.jip.PauseThirtySec"
+			doc:name="pause-thirty-sec" />
+		<logger level="INFO" doc:name="log-payload"
+			message="End of flow #[flow.name] with payload as #[payload]." />
+	</flow>
+</mule>
