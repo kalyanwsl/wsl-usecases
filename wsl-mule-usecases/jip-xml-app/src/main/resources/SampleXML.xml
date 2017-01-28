@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE note [
+<!ELEMENT note (to,from,heading,body,sample,root,parent)>
+<!ELEMENT to (#PCDATA)>
+<!ELEMENT from (#PCDATA)>
+<!ELEMENT heading (#PCDATA)>
+<!ELEMENT body (#PCDATA)>
+<!ELEMENT sample (#PCDATA)>
+<!ELEMENT root (#PCDATA)>
+<!ELEMENT parent (#PCDATA)>
+
+]>
+<note>
+  <to>Tove</to>
+  <from>Jani</from>
+  <heading>Reminder</heading>
+  <body>Don't forget me this weekend!</body>
+  <sample>sample test</sample>
+  	<root>root value</root>
+  <parent>parent value</parent>
+</note>

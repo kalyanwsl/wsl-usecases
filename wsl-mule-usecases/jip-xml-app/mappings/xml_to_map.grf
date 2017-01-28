@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph author="rafiqoffice" created="Mon May 19 19:53:52 IST 2014" description="XML To Map" guiVersion="3.4.3.P" id="1400510037996" licenseCode="Unlicensed" licenseType="Unknown" modified="Mon May 19 19:53:52 IST 2014" modifiedBy="rafiqoffice" name="XML_To_Map" preview-file="${Project_Home}/src/main/resources/SampleXML.xml" revision="1.0" showComponentDetails="false">
+<Global>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/note" _dataStructure="OBJECT" _id="__id" _type="Input" id="d77558ad-cc3a-4867-8c37-e4df772f3526">
+<Record fieldDelimiter="," name="note" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="0" __sourcePath="{}/note/to" containerType="SINGLE" label="to" name="to" type="string"/>
+<Field __index="1" __sourcePath="{}/note/from" containerType="SINGLE" label="from" name="from" type="string"/>
+<Field __index="2" __sourcePath="{}/note/heading" containerType="SINGLE" label="heading" name="heading" type="string"/>
+<Field __index="3" __sourcePath="{}/note/body" containerType="SINGLE" label="body" name="body" type="string"/>
+<Field __index="4" __sourcePath="{}/note/sample" containerType="SINGLE" label="sample" name="sample" type="string"/>
+<Field __index="5" __sourcePath="{}/note/root" containerType="SINGLE" label="root" name="root" type="string"/>
+<Field __index="6" __sourcePath="{}/note/parent" containerType="SINGLE" label="parent" name="parent" type="string"/>
+</Record>
+</Metadata>
+<Metadata __index="0" __referenceCounter="1" __sourcePath="{}/note" _dataStructure="OBJECT" _id="__id" _type="Output" id="d12f423c-3cae-4f4f-800c-0b95129a0da8">
+<Record fieldDelimiter="," name="note" recordDelimiter="\n\\|\r\n\\|\r" type="delimited">
+<Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
+<Field __index="3" __sourcePath="{}/note/body" containerType="SINGLE" label="body" name="body" type="string"/>
+<Field __index="1" __sourcePath="{}/note/from" containerType="SINGLE" label="from" name="from" type="string"/>
+<Field __index="2" __sourcePath="{}/note/heading" containerType="SINGLE" label="heading" name="heading" type="string"/>
+<Field __index="6" __sourcePath="{}/note/parent" containerType="SINGLE" label="parent" name="parent" type="string"/>
+<Field __index="5" __sourcePath="{}/note/root" containerType="SINGLE" label="root" name="root" type="string"/>
+<Field __index="4" __sourcePath="{}/note/sample" containerType="SINGLE" label="sample" name="sample" type="string"/>
+<Field __index="0" __sourcePath="{}/note/to" containerType="SINGLE" label="to" name="to" type="string"/>
+</Record>
+</Metadata>
+<Dictionary>
+<Entry id="DictionaryEntry0" input="true" name="inputPayload" output="false" type="object"/>
+<Entry id="DictionaryEntry1" input="false" name="outputPayload" output="true" type="object"/>
+</Dictionary>
+</Global>
+<Phase number="0">
+<Node enabled="enabled" guiName="Foreach 'note' -&gt; 'note'" guiX="460" guiY="20" id="FOREACH_NOTE_NOTE" transformClass="com.mulesoft.datamapper.transform.MelRecordTransform" type="REFORMAT">
+<attr name="melScript"><![CDATA[//MEL
+//START -> DO NOT REMOVE
+output.__id = input.__id;
+//END -> DO NOT REMOVE
+output.to = input.to;
+output.from = input.from;
+output.heading = input.heading;
+output.body = input.body;
+output.sample = input.sample;
+output.root = input.root;
+output.parent = input.parent;
+]]></attr>
+</Node>
+<Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<note xmlns:clover="http://www.cloveretl.com/ns/xmlmapping" clover:inPort="0">
+  <to>$0.to</to>
+  <from>$0.from</from>
+  <heading>$0.heading</heading>
+  <body>$0.body</body>
+  <sample>$0.sample</sample>
+  <root>$0.root</root>
+  <parent>$0.parent</parent>
+</note>]]></attr>
+<attr name="_data_format"><![CDATA[MAP]]></attr>
+</Node>
+<Node charset="UTF-8" enabled="enabled" fileURL="dict:inputPayload" guiName="XML READER" guiX="20" guiY="20" id="XML_READER0" type="XML_READER">
+<attr name="xmlSchemaURL"><![CDATA[.\src\test\resources\note.xsd]]></attr>
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Context outPort="0" sequenceField="__id" xpath="/note">
+  <Mapping cloverField="to" trim="true" xpath="to"/>
+  <Mapping cloverField="from" trim="true" xpath="from"/>
+  <Mapping cloverField="heading" trim="true" xpath="heading"/>
+  <Mapping cloverField="body" trim="true" xpath="body"/>
+  <Mapping cloverField="sample" trim="true" xpath="sample"/>
+  <Mapping cloverField="root" trim="true" xpath="root"/>
+  <Mapping cloverField="parent" trim="true" xpath="parent"/>
+</Context>
+]]></attr>
+<attr name="_data_format"><![CDATA[XML]]></attr>
+<attr name="__rootGlobalElementName"><![CDATA[note]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="FOREACH_NOTE_NOTE:0" guiBendpoints="" id="Edge1" inPort="Port 0 (in)" metadata="d12f423c-3cae-4f4f-800c-0b95129a0da8" outPort="Port 0 (out)" toNode="MAP_WRITER0:0"/>
+<Edge debugMode="true" fromNode="XML_READER0:0" guiBendpoints="" id="Edge0" inPort="Port 0 (in)" metadata="d77558ad-cc3a-4867-8c37-e4df772f3526" outPort="Port 0 (out)" toNode="FOREACH_NOTE_NOTE:0"/>
+</Phase>
+</Graph>
